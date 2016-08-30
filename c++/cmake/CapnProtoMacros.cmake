@@ -48,6 +48,12 @@ function(CAPNP_GENERATE_CPP SOURCES HEADERS)
   # Default compiler includes
   set(include_path -I ${CMAKE_CURRENT_SOURCE_DIR} -I ${CAPNP_INCLUDE_DIRECTORY})
 
+  if(WIN32)
+    set(CAPNP_PATH_SEPARATOR $<SEMICOLON>)
+  else()
+    set(CAPNP_PATH_SEPARATOR :)
+  endif()
+
   if(DEFINED CAPNPC_IMPORT_DIRS)
     # Append each directory as a series of '-I' flags in ${include_path}
     foreach(directory ${CAPNPC_IMPORT_DIRS})
@@ -58,9 +64,9 @@ function(CAPNP_GENERATE_CPP SOURCES HEADERS)
 
   if(DEFINED CAPNPC_OUTPUT_DIR)
     # Prepend a ':' to get the format for the '-o' flag right
-    set(output_dir ":${CAPNPC_OUTPUT_DIR}")
+    set(output_dir "${CAPNP_PATH_SEPARATOR}${CAPNPC_OUTPUT_DIR}")
   else()
-    set(output_dir ":.")
+    set(output_dir "${CAPNP_PATH_SEPARATOR}.")
   endif()
 
   if(NOT DEFINED CAPNPC_SRC_PREFIX)

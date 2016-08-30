@@ -42,9 +42,11 @@
 #include <stdlib.h>
 
 #if _WIN32
+#define PATH_SEPARATOR ';'
 #include <process.h>
 #else
 #include <sys/wait.h>
+#define PATH_SEPARATOR ':'
 #endif
 
 #if HAVE_CONFIG_H
@@ -330,49 +332,9 @@ public:
   // "compile" command
 
   kj::MainBuilder::Validity addOutput(kj::StringPtr spec) {
-    KJ_IF_MAYBE(split, spec.findFirst(':')) {
+    KJ_IF_MAYBE(split, spec.findFirst(PATH_SEPARATOR)) {
       kj::StringPtr dir = spec.slice(*split + 1);
       auto plugin = spec.slice(0, *split);
-
-      KJ_IF_MAYBE(split2, dir.findFirst(':')) {
-        // Grr, there are two colons. Might this be a Windows path? Let's do some heuristics.
-        if (*split == 1 && (dir.startsWith("/") || dir.startsWith("\\"))) {
-          // So, the first ':' was the second char, and was followed by '/' or '\', e.g.:
-          //     capnp compile -o c:/foo.exe:bar
-          //
-          // In this case we can conclude that the second colon is actually meant to be the
-          // plugin/location separator, and the first colon was simply signifying a drive letter.
-          //
-          // Proof by contradiction:
-          // - Say that none of the colons were meant to be plugin/location separators; i.e. the
-          //   whole argument is meant to be a plugin indicator and the location defaults to ".".
-          //   -> In this case, the plugin path has two colons, which is not valid.
-          //   -> CONTRADICTION
-          // - Say that the first colon was meant to be the plugin/location separator.
-          //   -> In this case, the second colon must be the drive letter separator for the
-          //      output location.
-          //   -> However, the output location begins with '/' or '\', which is not a drive letter.
-          //   -> CONTRADICTION
-          // - Say that there are more colons beyond the first two, and one of these is meant to
-          //   be the plugin/location separator.
-          //   -> In this case, the plugin path has two or more colons, which is not valid.
-          //   -> CONTRADICTION
-          //
-          // We therefore conclude that the *second* colon is in fact the plugin/location separator.
-          //
-          // Note that there is still an ambiguous case:
-          //     capnp compile -o c:/foo
-          //
-          // In this unfortunate case, we have no way to tell if the user meant "use the 'c' plugin
-          // and output to /foo" or "use the plugin c:/foo and output to the default location". We
-          // prefer the former interpretation, because the latter is Windows-specific and such
-          // users can always explicitly specify the output location like:
-          //     capnp compile -o c:/foo:.
-
-          dir = dir.slice(*split2 + 1);
-          plugin = spec.slice(0, *split2 + 2);
-        }
-      }
 
       struct stat stats;
       if (stat(dir.cStr(), &stats) < 0 || !S_ISDIR(stats.st_mode)) {
