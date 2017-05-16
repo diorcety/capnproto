@@ -338,18 +338,22 @@ inline constexpr uint sizeInWords() {
 
 #if CAPNP_LITE
 
-#define CAPNP_DECLARE_SCHEMA(id) \
-    extern ::capnp::word const* const bp_##id
+#define CAPNP_DECLARE_SCHEMA_2(id, exp) \
+    extern exp ::capnp::word const* const bp_##id
 
-#define CAPNP_DECLARE_ENUM(type, id) \
+#define CAPNP_DECLARE_SCHEMA(id) CAPNP_DECLARE_SCHEMA_2(id, )
+
+#define CAPNP_DECLARE_ENUM_2(type, id, exp) \
     inline ::kj::String KJ_STRINGIFY(type##_##id value) { \
       return ::kj::str(static_cast<uint16_t>(value)); \
     } \
-    template <> struct EnumInfo<type##_##id> { \
+    template <> struct exp EnumInfo<type##_##id> { \
       struct IsEnum; \
       static constexpr uint64_t typeId = 0x##id; \
       static inline ::capnp::word const* encodedSchema() { return bp_##id; } \
     }
+
+#define CAPNP_DECLARE_ENUM(type, id) CAPNP_DECLARE_ENUM_2(type, id, )
 
 #if _MSC_VER
 // TODO(msvc): MSVC dosen't expect constexprs to have definitions.
@@ -368,20 +372,24 @@ inline constexpr uint sizeInWords() {
 
 #else  // CAPNP_LITE
 
-#define CAPNP_DECLARE_SCHEMA(id) \
-    extern ::capnp::word const* const bp_##id; \
-    extern const ::capnp::_::RawSchema s_##id
+#define CAPNP_DECLARE_SCHEMA_2(id, exp) \
+    extern exp ::capnp::word const* const bp_##id; \
+    extern exp const ::capnp::_::RawSchema s_##id
 
-#define CAPNP_DECLARE_ENUM(type, id) \
+#define CAPNP_DECLARE_SCHEMA(id) CAPNP_DECLARE_SCHEMA_2(id, )
+
+#define CAPNP_DECLARE_ENUM_2(type, id, exp) \
     inline ::kj::String KJ_STRINGIFY(type##_##id value) { \
       return ::capnp::_::enumString(value); \
     } \
-    template <> struct EnumInfo<type##_##id> { \
+    template <> struct exp EnumInfo<type##_##id> { \
       struct IsEnum; \
       static constexpr uint64_t typeId = 0x##id; \
       static inline ::capnp::word const* encodedSchema() { return bp_##id; } \
       static constexpr ::capnp::_::RawSchema const* schema = &s_##id; \
     }
+#define CAPNP_DECLARE_ENUM(type, id) CAPNP_DECLARE_ENUM_2(type, id, )
+
 #define CAPNP_DEFINE_ENUM(type, id) \
     constexpr uint64_t EnumInfo<type>::typeId; \
     constexpr ::capnp::_::RawSchema const* EnumInfo<type>::schema
