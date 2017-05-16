@@ -54,11 +54,11 @@ namespace _ {  // private
 
 template <typename T, typename CapnpPrivate = typename T::_capnpPrivate, bool = false>
 inline const RawSchema& rawSchema() {
-  return *CapnpPrivate::schema;
+  return *CapnpPrivate::schema();
 }
 template <typename T, uint64_t id = schemas::EnumInfo<T>::typeId>
 inline const RawSchema& rawSchema() {
-  return *schemas::EnumInfo<T>::schema;
+  return *schemas::EnumInfo<T>::schema();
 }
 
 template <typename T, typename CapnpPrivate = typename T::_capnpPrivate>
@@ -67,7 +67,7 @@ inline const RawBrandedSchema& rawBrandedSchema() {
 }
 template <typename T, uint64_t id = schemas::EnumInfo<T>::typeId>
 inline const RawBrandedSchema& rawBrandedSchema() {
-  return schemas::EnumInfo<T>::schema->defaultBrand;
+  return schemas::EnumInfo<T>::schema()->defaultBrand;
 }
 
 template <typename TypeTag, typename... Params>
@@ -78,7 +78,7 @@ struct ChooseBrand;
 template <typename TypeTag>
 struct ChooseBrand<TypeTag> {
   // All params were AnyPointer. No specific brand needed.
-  static constexpr _::RawBrandedSchema const* brand() { return &TypeTag::schema->defaultBrand; }
+  static _::RawBrandedSchema const* brand() { return &TypeTag::schema()->defaultBrand; }
 };
 
 template <typename TypeTag, typename... Rest>
@@ -88,7 +88,7 @@ struct ChooseBrand<TypeTag, AnyPointer, Rest...>: public ChooseBrand<TypeTag, Re
 template <typename TypeTag, typename First, typename... Rest>
 struct ChooseBrand<TypeTag, First, Rest...> {
   // At least one parameter is not AnyPointer, so use the specificBrand constant.
-  static constexpr _::RawBrandedSchema const* brand() { return &TypeTag::specificBrand; }
+  static _::RawBrandedSchema const* brand() { return &TypeTag::specificBrand; }
 };
 
 template <typename T, Kind k = kind<T>()>
@@ -374,7 +374,8 @@ inline constexpr uint sizeInWords() {
 
 #define CAPNP_DECLARE_SCHEMA_2(id, exp) \
     extern exp ::capnp::word const* const bp_##id; \
-    extern exp const ::capnp::_::RawSchema s_##id
+    extern const ::capnp::_::RawSchema s_##id; \
+    extern exp ::capnp::_::RawSchema const* const sp_##id
 
 #define CAPNP_DECLARE_SCHEMA(id) CAPNP_DECLARE_SCHEMA_2(id, )
 
@@ -386,13 +387,12 @@ inline constexpr uint sizeInWords() {
       struct IsEnum; \
       static constexpr uint64_t typeId = 0x##id; \
       static inline ::capnp::word const* encodedSchema() { return bp_##id; } \
-      static constexpr ::capnp::_::RawSchema const* schema = &s_##id; \
+      static inline ::capnp::_::RawSchema const* schema() { return sp_##id; } \
     }
 #define CAPNP_DECLARE_ENUM(type, id) CAPNP_DECLARE_ENUM_2(type, id, )
 
 #define CAPNP_DEFINE_ENUM(type, id) \
-    constexpr uint64_t EnumInfo<type>::typeId; \
-    constexpr ::capnp::_::RawSchema const* EnumInfo<type>::schema
+    constexpr uint64_t EnumInfo<type>::typeId
 
 #define CAPNP_DECLARE_STRUCT_HEADER(id, dataWordSize_, pointerCount_) \
       struct IsStruct; \
@@ -401,14 +401,14 @@ inline constexpr uint sizeInWords() {
       static constexpr uint16_t dataWordSize = dataWordSize_; \
       static constexpr uint16_t pointerCount = pointerCount_; \
       static inline ::capnp::word const* encodedSchema() { return ::capnp::schemas::bp_##id; } \
-      static constexpr ::capnp::_::RawSchema const* schema = &::capnp::schemas::s_##id;
+      static inline ::capnp::_::RawSchema const* schema() { return ::capnp::schemas::sp_##id; }
 
 #define CAPNP_DECLARE_INTERFACE_HEADER(id) \
       struct IsInterface; \
       static constexpr uint64_t typeId = 0x##id; \
       static constexpr ::capnp::Kind kind = ::capnp::Kind::INTERFACE; \
       static inline ::capnp::word const* encodedSchema() { return ::capnp::schemas::bp_##id; } \
-      static constexpr ::capnp::_::RawSchema const* schema = &::capnp::schemas::s_##id;
+      static inline ::capnp::_::RawSchema const* schema() { return ::capnp::schemas::sp_##id; }
 
 #endif  // CAPNP_LITE, else
 
