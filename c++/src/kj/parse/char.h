@@ -39,7 +39,7 @@ namespace parse {
 // =======================================================================================
 // Exact char/string.
 
-class ExactString_ {
+class KJ_API ExactString_ {
 public:
   constexpr inline ExactString_(const char* str): str(str) {}
 
@@ -74,7 +74,7 @@ constexpr ExactlyConst_<char, c> exactChar() {
 // =======================================================================================
 // Char ranges / sets
 
-class CharGroup_ {
+class KJ_API CharGroup_ {
 public:
   constexpr inline CharGroup_(): bits{0, 0, 0, 0} {}
 
@@ -264,7 +264,7 @@ constexpr auto integer = sequence(
 
 namespace _ {  // private
 
-struct ParseFloat {
+struct KJ_API ParseFloat {
   double operator()(const Array<char>& digits,
                     const Maybe<Array<char>>& fraction,
                     const Maybe<Tuple<Maybe<char>, Array<char>>>& exponent) const;
@@ -285,7 +285,7 @@ constexpr auto number = transform(
 
 namespace _ {  // private
 
-struct InterpretEscape {
+struct KJ_API InterpretEscape {
   char operator()(char c) const {
     switch (c) {
       case 'a': return '\a';
@@ -300,19 +300,19 @@ struct InterpretEscape {
   }
 };
 
-struct ParseHexEscape {
+struct KJ_API ParseHexEscape {
   inline char operator()(char first, char second) const {
     return (parseDigit(first) << 4) | parseDigit(second);
   }
 };
 
-struct ParseHexByte {
+struct KJ_API ParseHexByte {
   inline byte operator()(char first, char second) const {
     return (parseDigit(first) << 4) | parseDigit(second);
   }
 };
 
-struct ParseOctEscape {
+struct KJ_API ParseOctEscape {
   inline char operator()(char first, Maybe<char> second, Maybe<char> third) const {
     char result = first - '0';
     KJ_IF_MAYBE(digit1, second) {

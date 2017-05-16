@@ -34,9 +34,9 @@
 namespace capnp {
 namespace compiler {
 
-bool lex(kj::ArrayPtr<const char> input, LexedStatements::Builder result,
+CAPNP_C_API bool lex(kj::ArrayPtr<const char> input, LexedStatements::Builder result,
          ErrorReporter& errorReporter);
-bool lex(kj::ArrayPtr<const char> input, LexedTokens::Builder result, ErrorReporter& errorReporter);
+CAPNP_C_API bool lex(kj::ArrayPtr<const char> input, LexedTokens::Builder result, ErrorReporter& errorReporter);
 // Lex the given source code, placing the results in `result`.  Returns true if there
 // were no errors, false if there were.  Even when errors are present, the file may have partial
 // content which can be fed into later stages of parsing in order to find more errors.
@@ -45,7 +45,7 @@ bool lex(kj::ArrayPtr<const char> input, LexedTokens::Builder result, ErrorRepor
 // that might form a part of one statement.  In other words, in the later case, the input should
 // not contain semicolons or curly braces, unless they are in string literals of course.
 
-class Lexer {
+class CAPNP_C_API Lexer {
   // Advanced lexer interface.  This interface exposes the inner parsers so that you can embed them
   // into your own parsers.
 
@@ -56,7 +56,7 @@ public:
 
   ~Lexer() noexcept(false);
 
-  class ParserInput: public kj::parse::IteratorInput<char, const char*> {
+  class CAPNP_C_API ParserInput: public kj::parse::IteratorInput<char, const char*> {
     // Like IteratorInput<char, const char*> except that positions are measured as byte offsets
     // rather than pointers.
 

@@ -58,6 +58,7 @@ set(kj-std_headers
   std/iostream.h
 )
 add_library(kj ${kj_sources})
+target_compile_definitions(kj PRIVATE KJ_EXPORTS)
 add_library(CapnProto::kj ALIAS kj)
 target_compile_features(kj PUBLIC cxx_constexpr)
 # Requiring the cxx_std_11 metafeature would be preferable, but that doesn't exist until CMake 3.8.
@@ -113,6 +114,7 @@ set(kj-async_headers
 )
 if(NOT CAPNP_LITE)
   add_library(kj-async ${kj-async_sources})
+  target_compile_definitions(kj-async PRIVATE KJ_ASYNC_EXPORTS)
   add_library(CapnProto::kj-async ALIAS kj-async)
   target_link_libraries(kj-async PUBLIC kj)
   if(UNIX)
@@ -135,6 +137,7 @@ set(kj-http_headers
 )
 if(NOT CAPNP_LITE)
   add_library(kj-http ${kj-http_sources})
+  target_compile_definitions(kj-http PRIVATE KJ_HTTP_EXPORTS)
   add_library(CapnProto::kj-http ALIAS kj-http)
   target_link_libraries(kj-http PUBLIC kj-async kj)
   install(TARGETS kj-http ${INSTALL_TARGETS_DEFAULT_ARGS})

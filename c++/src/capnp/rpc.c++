@@ -955,7 +955,7 @@ private:
     void resolve(kj::Own<ClientHook> replacement, bool isError) {
       const void* replacementBrand = replacement->getBrand();
       if (replacementBrand != connectionState.get() &&
-          replacementBrand != &ClientHook::NULL_CAPABILITY_BRAND &&
+          replacementBrand != &NULL_CAPABILITY_BRAND &&
           receivedCall && !isError && connectionState->connection.is<Connected>()) {
         // The new capability is hosted locally, not on the remote machine.  And, we had made calls
         // to the promise.  We need to make sure those calls echo back to us before we allow new

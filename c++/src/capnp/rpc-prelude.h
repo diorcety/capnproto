@@ -42,7 +42,7 @@ class RpcSystem;
 
 namespace _ {  // private
 
-class VatNetworkBase {
+class CAPNP_RPC_API VatNetworkBase {
   // Non-template version of VatNetwork.  Ignore this class; see VatNetwork in rpc.h.
 
 public:
@@ -54,7 +54,7 @@ public:
     Orphan<AnyPointer> provisionId;
   };
 
-  class Connection {
+  class CAPNP_RPC_API Connection {
   public:
     virtual kj::Own<OutgoingRpcMessage> newOutgoingMessage(uint firstSegmentWordSize) = 0;
     virtual kj::Promise<kj::Maybe<kj::Own<IncomingRpcMessage>>> receiveIncomingMessage() = 0;
@@ -65,18 +65,18 @@ public:
   virtual kj::Promise<kj::Own<Connection>> baseAccept() = 0;
 };
 
-class SturdyRefRestorerBase {
+class CAPNP_RPC_API SturdyRefRestorerBase {
 public:
   virtual Capability::Client baseRestore(AnyPointer::Reader ref) = 0;
 };
 
-class BootstrapFactoryBase {
+class CAPNP_RPC_API BootstrapFactoryBase {
   // Non-template version of BootstrapFactory.  Ignore this class; see BootstrapFactory in rpc.h.
 public:
   virtual Capability::Client baseCreateFor(AnyStruct::Reader clientId) = 0;
 };
 
-class RpcSystemBase {
+class CAPNP_RPC_API RpcSystemBase {
   // Non-template version of RpcSystem.  Ignore this class; see RpcSystem in rpc.h.
 
 public:

@@ -266,7 +266,7 @@ private:
 // =======================================================================================
 // VatNetwork
 
-class OutgoingRpcMessage {
+class CAPNP_RPC_API OutgoingRpcMessage {
   // A message to be sent by a `VatNetwork`.
 
 public:
@@ -279,7 +279,7 @@ public:
   // returned by `getBody()` remains valid at least until the `OutgoingRpcMessage` is destroyed.
 };
 
-class IncomingRpcMessage {
+class CAPNP_RPC_API IncomingRpcMessage {
   // A message received from a `VatNetwork`.
 
 public:

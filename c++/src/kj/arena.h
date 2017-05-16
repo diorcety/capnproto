@@ -32,7 +32,7 @@
 
 namespace kj {
 
-class Arena {
+class KJ_API Arena {
   // A class which allows several objects to be allocated in contiguous chunks of memory, then
   // frees them all at once.
   //

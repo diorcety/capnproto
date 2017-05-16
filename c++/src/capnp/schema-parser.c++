@@ -353,6 +353,10 @@ kj::String joinPath(kj::StringPtr base, kj::StringPtr add) {
 
 }  // namespace
 
+const SchemaFile::DiskFileReader& SchemaFile::DiskFileReader::_instance() {
+  return instance;
+}
+
 const SchemaFile::DiskFileReader SchemaFile::DiskFileReader::instance =
     SchemaFile::DiskFileReader();
 

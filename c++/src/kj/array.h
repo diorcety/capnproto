@@ -35,7 +35,7 @@ namespace kj {
 // =======================================================================================
 // ArrayDisposer -- Implementation details.
 
-class ArrayDisposer {
+class KJ_API ArrayDisposer {
   // Much like Disposer from memory.h.
 
 protected:
@@ -63,7 +63,7 @@ private:
   struct Dispose_;
 };
 
-class ExceptionSafeArrayUtil {
+class KJ_API ExceptionSafeArrayUtil {
   // Utility class that assists in constructing or destroying elements of an array, where the
   // constructor or destructor could throw exceptions.  In case of an exception,
   // ExceptionSafeArrayUtil's destructor will call destructors on all elements that have been
@@ -102,7 +102,7 @@ private:
   void (*destroyElement)(void*);
 };
 
-class DestructorOnlyArrayDisposer: public ArrayDisposer {
+class KJ_API DestructorOnlyArrayDisposer: public ArrayDisposer {
 public:
   static const DestructorOnlyArrayDisposer instance;
 
@@ -110,7 +110,7 @@ public:
                    size_t capacity, void (*destroyElement)(void*)) const override;
 };
 
-class NullArrayDisposer: public ArrayDisposer {
+class KJ_API NullArrayDisposer: public ArrayDisposer {
   // An ArrayDisposer that does nothing.  Can be used to construct a fake Arrays that doesn't
   // actually own its content.
 
@@ -255,12 +255,14 @@ static_assert(!canMemcpy<Array<char>>(), "canMemcpy<>() is broken");
 
 namespace _ {  // private
 
-class HeapArrayDisposer final: public ArrayDisposer {
+class KJ_API HeapArrayDisposer final: public ArrayDisposer {
 public:
   template <typename T>
   static T* allocate(size_t count);
   template <typename T>
   static T* allocateUninitialized(size_t count);
+
+  static const HeapArrayDisposer& _instance();
 
   static const HeapArrayDisposer instance;
 
@@ -285,7 +287,7 @@ inline Array<T> heapArray(size_t size) {
   // Much like `heap<T>()` from memory.h, allocates a new array on the heap.
 
   return Array<T>(_::HeapArrayDisposer::allocate<T>(size), size,
-                  _::HeapArrayDisposer::instance);
+                  _::HeapArrayDisposer::_instance());
 }
 
 template <typename T> Array<T> heapArray(const T* content, size_t size);
@@ -474,7 +476,7 @@ inline ArrayBuilder<T> heapArrayBuilder(size_t size) {
   // manually by calling `add()`.
 
   return ArrayBuilder<T>(_::HeapArrayDisposer::allocateUninitialized<RemoveConst<T>>(size),
-                         size, _::HeapArrayDisposer::instance);
+                         size, _::HeapArrayDisposer::_instance());
 }
 
 // =======================================================================================

@@ -37,13 +37,13 @@
 namespace capnp {
 namespace compiler {
 
-class NodeTranslator {
+class CAPNP_C_API NodeTranslator {
   // Translates one node in the schema from AST form to final schema form.  A "node" is anything
   // that has a unique ID, such as structs, enums, constants, and annotations, but not fields,
   // unions, enumerants, or methods (the latter set have 16-bit ordinals but not 64-bit global IDs).
 
 public:
-  class Resolver {
+  class CAPNP_C_API Resolver {
     // Callback class used to find other nodes relative to this one.
     //
     // TODO(cleanup): This has evolved into being a full interface for traversing the node tree.
@@ -274,9 +274,9 @@ private:
       kj::StringPtr targetsFlagName);
 };
 
-class ValueTranslator {
+class CAPNP_C_API ValueTranslator {
 public:
-  class Resolver {
+  class CAPNP_C_API Resolver {
   public:
     virtual kj::Maybe<DynamicValue::Reader> resolveConstant(Expression::Reader name) = 0;
     virtual kj::Maybe<kj::Array<const byte>> readEmbed(LocatedText::Reader filename) = 0;

@@ -74,6 +74,10 @@ else()
   endif()
 endif()
 
+if (NOT BUILD_SHARED_LIBS)
+  add_definitions(-D_LIB)
+endif()
+
 # Source =======================================================================
 include(CapnProtoMacros)
 add_subdirectory(src)

@@ -34,7 +34,7 @@
 namespace capnp {
 namespace compiler {
 
-class ErrorReporter {
+class CAPNP_C_API ErrorReporter {
   // Callback for reporting errors within a particular file.
 
 public:
@@ -58,7 +58,7 @@ public:
   // of previous errors.
 };
 
-class GlobalErrorReporter {
+class CAPNP_C_API GlobalErrorReporter {
   // Callback for reporting errors in any file.
 
 public:
@@ -79,7 +79,7 @@ public:
   // of previous errors.
 };
 
-class LineBreakTable {
+class CAPNP_C_API LineBreakTable {
 public:
   LineBreakTable(kj::ArrayPtr<const char> content);
 

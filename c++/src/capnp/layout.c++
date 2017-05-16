@@ -38,7 +38,7 @@ static BrokenCapFactory* brokenCapFactory = nullptr;
 // Horrible hack:  We need to be able to construct broken caps without any capability context,
 // but we can't have a link-time dependency on libcapnp-rpc.
 
-void setGlobalBrokenCapFactoryForLayoutCpp(BrokenCapFactory& factory) {
+CAPNP_API void setGlobalBrokenCapFactoryForLayoutCpp(BrokenCapFactory& factory) {
   // Called from capability.c++ when the capability API is used, to make sure that layout.c++
   // is ready for it.  May be called multiple times but always with the same value.
 #if __GNUC__
@@ -52,7 +52,7 @@ void setGlobalBrokenCapFactoryForLayoutCpp(BrokenCapFactory& factory) {
 
 }  // namespace _ (private)
 
-const uint ClientHook::NULL_CAPABILITY_BRAND = 0;
+const uint NULL_CAPABILITY_BRAND = 0;
 // Defined here rather than capability.c++ so that we can safely call isNull() in this file.
 
 namespace _ {  // private

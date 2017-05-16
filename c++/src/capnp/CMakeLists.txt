@@ -57,6 +57,7 @@ set(capnp_schemas
   schema.capnp
 )
 add_library(capnp ${capnp_sources})
+target_compile_definitions(capnp PRIVATE CAPNP_EXPORTS CAPNP_bdf87d7bb8304e81_EXPORTS CAPNP_a93fc509624c72d9_EXPORTS)
 add_library(CapnProto::capnp ALIAS capnp)
 target_link_libraries(capnp PUBLIC kj)
 #make sure external consumers don't need to manually set the include dirs
@@ -95,6 +96,7 @@ set(capnp-rpc_schemas
 )
 if(NOT CAPNP_LITE)
   add_library(capnp-rpc ${capnp-rpc_sources})
+  target_compile_definitions(capnp-rpc PRIVATE CAPNP_RPC_EXPORTS CAPNP_b312981b2552a250_EXPORTS CAPNP_a184c7885cdaf2a1_EXPORTS CAPNP_b8630836983feed7_EXPORTS)
   add_library(CapnProto::capnp-rpc ALIAS capnp-rpc)
   target_link_libraries(capnp-rpc PUBLIC capnp kj-async kj)
   install(TARGETS capnp-rpc ${INSTALL_TARGETS_DEFAULT_ARGS})
@@ -116,6 +118,7 @@ set(capnp-json_schemas
 )
 if(NOT CAPNP_LITE)
   add_library(capnp-json ${capnp-json_sources})
+  target_compile_definitions(capnp-json PRIVATE CAPNP_JSON_EXPORTS CAPNP_8ef99297a43a5e34_EXPORTS)
   add_library(CapnProto::capnp-json ALIAS capnp-json)
   target_link_libraries(capnp-json PUBLIC capnp kj-async kj)
   install(TARGETS capnp-json ${INSTALL_TARGETS_DEFAULT_ARGS})
@@ -138,6 +141,7 @@ set(capnpc_sources
 )
 if(NOT CAPNP_LITE)
   add_library(capnpc ${capnpc_sources})
+  target_compile_definitions(capnpc PRIVATE CAPNP_C_EXPORTS CAPNP_a73956d2621fc3ee_EXPORTS CAPNP_c56be168dcbbc3c6_EXPORTS)
   target_link_libraries(capnpc PUBLIC capnp kj)
   install(TARGETS capnpc ${INSTALL_TARGETS_DEFAULT_ARGS})
   install(FILES ${capnpc_headers} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/capnp")
@@ -149,7 +153,7 @@ if(NOT CAPNP_LITE)
     compiler/capnp.c++
   )
   target_link_libraries(capnp_tool capnpc capnp kj)
-  set_target_properties(capnp_tool PROPERTIES OUTPUT_NAME capnp)
+  set_target_properties(capnp_tool PROPERTIES OUTPUT_NAME capnp IMPORT_PREFIX _)
   set_target_properties(capnp_tool PROPERTIES CAPNP_INCLUDE_DIRECTORY
     $<JOIN:$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>,$<INSTALL_INTERFACE:${CMAKE_INSTALL_BINDIR}/..>>
   )

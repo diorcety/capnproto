@@ -190,8 +190,8 @@ constexpr RawBrandedSchema::Binding brandBindingFor() {
   return BrandBindingFor_<T>::get(0);
 }
 
-kj::StringTree structString(StructReader reader, const RawBrandedSchema& schema);
-kj::String enumString(uint16_t value, const RawBrandedSchema& schema);
+CAPNP_API kj::StringTree structString(StructReader reader, const RawBrandedSchema& schema);
+CAPNP_API kj::String enumString(uint16_t value, const RawBrandedSchema& schema);
 // Declared here so that we can declare inline stringify methods on generated types.
 // Defined in stringify.c++, which depends on dynamic.c++, which is allowed not to be linked in.
 

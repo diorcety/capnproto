@@ -34,7 +34,7 @@ namespace capnp {
 class ParsedSchema;
 class SchemaFile;
 
-class SchemaParser {
+class CAPNP_C_API SchemaParser {
   // Parses `.capnp` files to produce `Schema` objects.
   //
   // This class is thread-safe, hence all its methods are const.
@@ -95,7 +95,7 @@ private:
   friend class ParsedSchema;
 };
 
-class ParsedSchema: public Schema {
+class CAPNP_C_API ParsedSchema: public Schema {
   // ParsedSchema is an extension of Schema which also has the ability to look up nested nodes
   // by name.  See `SchemaParser`.
 
@@ -120,25 +120,27 @@ private:
 // =======================================================================================
 // Advanced API
 
-class SchemaFile {
+class CAPNP_C_API SchemaFile {
   // Abstract interface representing a schema file.  You can implement this yourself in order to
   // gain more control over how the compiler resolves imports and reads files.  For the
   // common case of files on disk or other global filesystem-like namespaces, use
   // `SchemaFile::newDiskFile()`.
 
 public:
-  class FileReader {
+  class CAPNP_C_API FileReader {
   public:
     virtual bool exists(kj::StringPtr path) const = 0;
     virtual kj::Array<const char> read(kj::StringPtr path) const = 0;
   };
 
-  class DiskFileReader final: public FileReader {
+  class CAPNP_C_API DiskFileReader final: public FileReader {
     // Implementation of FileReader that uses the local disk.  Files are read using mmap() if
     // possible.
 
   public:
     static const DiskFileReader instance;
+
+    static const DiskFileReader& _instance();
 
     bool exists(kj::StringPtr path) const override;
     kj::Array<const char> read(kj::StringPtr path) const override;
@@ -147,7 +149,7 @@ public:
   static kj::Own<SchemaFile> newDiskFile(
       kj::StringPtr displayName, kj::StringPtr diskPath,
       kj::ArrayPtr<const kj::StringPtr> importPath,
-      const FileReader& fileReader = DiskFileReader::instance);
+      const FileReader& fileReader = DiskFileReader::_instance());
   // Construct a SchemaFile representing a file on disk (or located in the filesystem-like
   // namespace represented by `fileReader`).
   //

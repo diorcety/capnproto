@@ -34,7 +34,7 @@ namespace kj {
 
 class TestRunner;
 
-class TestCase {
+class KJ_API TestCase {
 public:
   TestCase(const char* file, uint line, const char* description);
   ~TestCase();
@@ -128,7 +128,7 @@ bool expectFatalThrow(Maybe<Exception::Type> type, Maybe<StringPtr> message,
 // fork() is not available, this always returns true.
 #endif
 
-class LogExpectation: public ExceptionCallback {
+class KJ_API LogExpectation: public ExceptionCallback {
 public:
   LogExpectation(LogSeverity severity, StringPtr substring);
   ~LogExpectation();
@@ -143,7 +143,7 @@ private:
   UnwindDetector unwindDetector;
 };
 
-class GlobFilter {
+class KJ_API GlobFilter {
   // Implements glob filters for the --filter flag.
   //
   // Exposed in header only for testing.
