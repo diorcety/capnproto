@@ -4,6 +4,21 @@
 #ifndef CAPNP_INCLUDED_a73956d2621fc3ee_
 #define CAPNP_INCLUDED_a73956d2621fc3ee_
 
+#ifndef CAPNP_a73956d2621fc3ee_API 
+#if defined(_MSC_VER)
+#if defined(CAPNP_a73956d2621fc3ee_EXPORTS)
+#define CAPNP_a73956d2621fc3ee_API  __declspec(dllexport)
+#else
+#if defined(_LIB)
+#define CAPNP_a73956d2621fc3ee_API 
+#else
+#define CAPNP_a73956d2621fc3ee_API  __declspec(dllimport)
+#endif
+#endif
+#else
+#define CAPNP_a73956d2621fc3ee_API 
+#endif
+#endif
 #include <capnp/generated-header-support.h>
 
 #if CAPNP_VERSION != 6001
@@ -14,10 +29,10 @@
 namespace capnp {
 namespace schemas {
 
-CAPNP_DECLARE_SCHEMA(91cc55cd57de5419);
-CAPNP_DECLARE_SCHEMA(c6725e678d60fa37);
-CAPNP_DECLARE_SCHEMA(9e69a92512b19d18);
-CAPNP_DECLARE_SCHEMA(a11f97b9d6c73dd4);
+CAPNP_DECLARE_SCHEMA_2(91cc55cd57de5419, CAPNP_a73956d2621fc3ee_API );
+CAPNP_DECLARE_SCHEMA_2(c6725e678d60fa37, CAPNP_a73956d2621fc3ee_API );
+CAPNP_DECLARE_SCHEMA_2(9e69a92512b19d18, CAPNP_a73956d2621fc3ee_API );
+CAPNP_DECLARE_SCHEMA_2(a11f97b9d6c73dd4, CAPNP_a73956d2621fc3ee_API );
 
 }  // namespace schemas
 }  // namespace capnp
@@ -45,7 +60,7 @@ struct Token {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(91cc55cd57de5419, 3, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -64,7 +79,7 @@ struct Statement {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(c6725e678d60fa37, 2, 3)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -79,7 +94,7 @@ struct LexedTokens {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(9e69a92512b19d18, 0, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -94,14 +109,14 @@ struct LexedStatements {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(a11f97b9d6c73dd4, 0, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
 
 // =======================================================================================
 
-class Token::Reader {
+class CAPNP_a73956d2621fc3ee_API Token::Reader {
 public:
   typedef Token Reads;
 
@@ -165,7 +180,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Token::Builder {
+class CAPNP_a73956d2621fc3ee_API Token::Builder {
 public:
   typedef Token Builds;
 
@@ -256,7 +271,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class Token::Pipeline {
+class CAPNP_a73956d2621fc3ee_API Token::Pipeline {
 public:
   typedef Token Pipelines;
 
@@ -272,7 +287,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Statement::Reader {
+class CAPNP_a73956d2621fc3ee_API Statement::Reader {
 public:
   typedef Statement Reads;
 
@@ -319,7 +334,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Statement::Builder {
+class CAPNP_a73956d2621fc3ee_API Statement::Builder {
 public:
   typedef Statement Builds;
 
@@ -378,7 +393,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class Statement::Pipeline {
+class CAPNP_a73956d2621fc3ee_API Statement::Pipeline {
 public:
   typedef Statement Pipelines;
 
@@ -394,7 +409,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class LexedTokens::Reader {
+class CAPNP_a73956d2621fc3ee_API LexedTokens::Reader {
 public:
   typedef LexedTokens Reads;
 
@@ -426,7 +441,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class LexedTokens::Builder {
+class CAPNP_a73956d2621fc3ee_API LexedTokens::Builder {
 public:
   typedef LexedTokens Builds;
 
@@ -459,7 +474,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class LexedTokens::Pipeline {
+class CAPNP_a73956d2621fc3ee_API LexedTokens::Pipeline {
 public:
   typedef LexedTokens Pipelines;
 
@@ -475,7 +490,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class LexedStatements::Reader {
+class CAPNP_a73956d2621fc3ee_API LexedStatements::Reader {
 public:
   typedef LexedStatements Reads;
 
@@ -507,7 +522,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class LexedStatements::Builder {
+class CAPNP_a73956d2621fc3ee_API LexedStatements::Builder {
 public:
   typedef LexedStatements Builds;
 
@@ -540,7 +555,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class LexedStatements::Pipeline {
+class CAPNP_a73956d2621fc3ee_API LexedStatements::Pipeline {
 public:
   typedef LexedStatements Pipelines;
 

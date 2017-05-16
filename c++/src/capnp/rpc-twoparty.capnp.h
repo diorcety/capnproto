@@ -4,6 +4,21 @@
 #ifndef CAPNP_INCLUDED_a184c7885cdaf2a1_
 #define CAPNP_INCLUDED_a184c7885cdaf2a1_
 
+#ifndef CAPNP_a184c7885cdaf2a1_API 
+#if defined(_MSC_VER)
+#if defined(CAPNP_a184c7885cdaf2a1_EXPORTS)
+#define CAPNP_a184c7885cdaf2a1_API  __declspec(dllexport)
+#else
+#if defined(_LIB)
+#define CAPNP_a184c7885cdaf2a1_API 
+#else
+#define CAPNP_a184c7885cdaf2a1_API  __declspec(dllimport)
+#endif
+#endif
+#else
+#define CAPNP_a184c7885cdaf2a1_API 
+#endif
+#endif
 #include <capnp/generated-header-support.h>
 
 #if CAPNP_VERSION != 6001
@@ -14,18 +29,18 @@
 namespace capnp {
 namespace schemas {
 
-CAPNP_DECLARE_SCHEMA(9fd69ebc87b9719c);
-enum class Side_9fd69ebc87b9719c: uint16_t {
+CAPNP_DECLARE_SCHEMA_2(9fd69ebc87b9719c, CAPNP_a184c7885cdaf2a1_API );
+enum class CAPNP_a184c7885cdaf2a1_API Side_9fd69ebc87b9719c: uint16_t {
   SERVER,
   CLIENT,
 };
-CAPNP_DECLARE_ENUM(Side, 9fd69ebc87b9719c);
-CAPNP_DECLARE_SCHEMA(d20b909fee733a8e);
-CAPNP_DECLARE_SCHEMA(b88d09a9c5f39817);
-CAPNP_DECLARE_SCHEMA(89f389b6fd4082c1);
-CAPNP_DECLARE_SCHEMA(b47f4979672cb59d);
-CAPNP_DECLARE_SCHEMA(95b29059097fca83);
-CAPNP_DECLARE_SCHEMA(9d263a3630b7ebee);
+CAPNP_DECLARE_ENUM_2(Side, 9fd69ebc87b9719c, CAPNP_a184c7885cdaf2a1_API );
+CAPNP_DECLARE_SCHEMA_2(d20b909fee733a8e, CAPNP_a184c7885cdaf2a1_API );
+CAPNP_DECLARE_SCHEMA_2(b88d09a9c5f39817, CAPNP_a184c7885cdaf2a1_API );
+CAPNP_DECLARE_SCHEMA_2(89f389b6fd4082c1, CAPNP_a184c7885cdaf2a1_API );
+CAPNP_DECLARE_SCHEMA_2(b47f4979672cb59d, CAPNP_a184c7885cdaf2a1_API );
+CAPNP_DECLARE_SCHEMA_2(95b29059097fca83, CAPNP_a184c7885cdaf2a1_API );
+CAPNP_DECLARE_SCHEMA_2(9d263a3630b7ebee, CAPNP_a184c7885cdaf2a1_API );
 
 }  // namespace schemas
 }  // namespace capnp
@@ -46,7 +61,7 @@ struct VatId {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(d20b909fee733a8e, 1, 0)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -61,7 +76,7 @@ struct ProvisionId {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(b88d09a9c5f39817, 1, 0)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -76,7 +91,7 @@ struct RecipientId {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(89f389b6fd4082c1, 0, 0)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -91,7 +106,7 @@ struct ThirdPartyCapId {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(b47f4979672cb59d, 0, 0)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -106,7 +121,7 @@ struct JoinKeyPart {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(95b29059097fca83, 1, 0)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -121,14 +136,14 @@ struct JoinResult {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(9d263a3630b7ebee, 1, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
 
 // =======================================================================================
 
-class VatId::Reader {
+class CAPNP_a184c7885cdaf2a1_API VatId::Reader {
 public:
   typedef VatId Reads;
 
@@ -159,7 +174,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class VatId::Builder {
+class CAPNP_a184c7885cdaf2a1_API VatId::Builder {
 public:
   typedef VatId Builds;
 
@@ -188,7 +203,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class VatId::Pipeline {
+class CAPNP_a184c7885cdaf2a1_API VatId::Pipeline {
 public:
   typedef VatId Pipelines;
 
@@ -204,7 +219,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class ProvisionId::Reader {
+class CAPNP_a184c7885cdaf2a1_API ProvisionId::Reader {
 public:
   typedef ProvisionId Reads;
 
@@ -235,7 +250,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class ProvisionId::Builder {
+class CAPNP_a184c7885cdaf2a1_API ProvisionId::Builder {
 public:
   typedef ProvisionId Builds;
 
@@ -264,7 +279,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class ProvisionId::Pipeline {
+class CAPNP_a184c7885cdaf2a1_API ProvisionId::Pipeline {
 public:
   typedef ProvisionId Pipelines;
 
@@ -280,7 +295,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class RecipientId::Reader {
+class CAPNP_a184c7885cdaf2a1_API RecipientId::Reader {
 public:
   typedef RecipientId Reads;
 
@@ -309,7 +324,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class RecipientId::Builder {
+class CAPNP_a184c7885cdaf2a1_API RecipientId::Builder {
 public:
   typedef RecipientId Builds;
 
@@ -335,7 +350,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class RecipientId::Pipeline {
+class CAPNP_a184c7885cdaf2a1_API RecipientId::Pipeline {
 public:
   typedef RecipientId Pipelines;
 
@@ -351,7 +366,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class ThirdPartyCapId::Reader {
+class CAPNP_a184c7885cdaf2a1_API ThirdPartyCapId::Reader {
 public:
   typedef ThirdPartyCapId Reads;
 
@@ -380,7 +395,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class ThirdPartyCapId::Builder {
+class CAPNP_a184c7885cdaf2a1_API ThirdPartyCapId::Builder {
 public:
   typedef ThirdPartyCapId Builds;
 
@@ -406,7 +421,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class ThirdPartyCapId::Pipeline {
+class CAPNP_a184c7885cdaf2a1_API ThirdPartyCapId::Pipeline {
 public:
   typedef ThirdPartyCapId Pipelines;
 
@@ -422,7 +437,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class JoinKeyPart::Reader {
+class CAPNP_a184c7885cdaf2a1_API JoinKeyPart::Reader {
 public:
   typedef JoinKeyPart Reads;
 
@@ -457,7 +472,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class JoinKeyPart::Builder {
+class CAPNP_a184c7885cdaf2a1_API JoinKeyPart::Builder {
 public:
   typedef JoinKeyPart Builds;
 
@@ -492,7 +507,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class JoinKeyPart::Pipeline {
+class CAPNP_a184c7885cdaf2a1_API JoinKeyPart::Pipeline {
 public:
   typedef JoinKeyPart Pipelines;
 
@@ -508,7 +523,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class JoinResult::Reader {
+class CAPNP_a184c7885cdaf2a1_API JoinResult::Reader {
 public:
   typedef JoinResult Reads;
 
@@ -544,7 +559,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class JoinResult::Builder {
+class CAPNP_a184c7885cdaf2a1_API JoinResult::Builder {
 public:
   typedef JoinResult Builds;
 
@@ -580,7 +595,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class JoinResult::Pipeline {
+class CAPNP_a184c7885cdaf2a1_API JoinResult::Pipeline {
 public:
   typedef JoinResult Pipelines;
 
