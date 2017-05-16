@@ -33,7 +33,7 @@
 
 namespace kj {
 
-class ProcessContext {
+class KJ_API ProcessContext {
   // Context for command-line programs.
 
 public:
@@ -129,7 +129,7 @@ public:
   //   these things can be mocked out.
 };
 
-class TopLevelProcessContext final: public ProcessContext {
+class KJ_API TopLevelProcessContext final: public ProcessContext {
   // A ProcessContext implementation appropriate for use at the actual entry point of a process
   // (as opposed to when you are trying to call a program's main function from within some other
   // program).  This implementation writes errors to stderr, and its `exit()` method actually
@@ -160,7 +160,7 @@ private:
 
 typedef Function<void(StringPtr programName, ArrayPtr<const StringPtr> params)> MainFunc;
 
-int runMainAndExit(ProcessContext& context, MainFunc&& func, int argc, char* argv[]);
+KJ_API int runMainAndExit(ProcessContext& context, MainFunc&& func, int argc, char* argv[]);
 // Runs the given main function and then exits using the given context.  If an exception is thrown,
 // this will catch it, report it via the context and exit with an error code.
 //
@@ -182,7 +182,7 @@ int runMainAndExit(ProcessContext& context, MainFunc&& func, int argc, char* arg
 // a constructor that accepts a ProcessContext& and a method getMain() which returns
 // kj::MainFunc (probably building it using a MainBuilder).
 
-class MainBuilder {
+class KJ_API MainBuilder {
   // Builds a main() function with nice argument parsing.  As options and arguments are parsed,
   // corresponding callbacks are called, so that you never have to write a massive switch()
   // statement to interpret arguments.  Additionally, this approach encourages you to write
@@ -250,7 +250,7 @@ public:
               StringPtr briefDescription, StringPtr extendedDescription = nullptr);
   ~MainBuilder() noexcept(false);
 
-  class OptionName {
+  class KJ_API OptionName {
   public:
     OptionName() = default;
     inline OptionName(char shortName): isLong(false), shortName(shortName) {}
@@ -265,7 +265,7 @@ public:
     friend class MainBuilder;
   };
 
-  class Validity {
+  class /*KJ_API*/ Validity {
   public:
     inline Validity(bool valid) {
       if (!valid) errorMessage = heapString("invalid argument");

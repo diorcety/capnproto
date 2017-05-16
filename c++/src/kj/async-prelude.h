@@ -55,11 +55,11 @@ using JoinPromises = typename JoinPromises_<T>::Type;
 // TODO(cleanup):  Rename to avoid confusion with joinPromises() call which is completely
 //   unrelated.
 
-class PropagateException {
+class KJ_ASYNC_API PropagateException {
   // A functor which accepts a kj::Exception as a parameter and returns a broken promise of
   // arbitrary type which simply propagates the exception.
 public:
-  class Bottom {
+  class KJ_ASYNC_API Bottom {
   public:
     Bottom(Exception&& exception): exception(kj::mv(exception)) {}
 
@@ -176,7 +176,7 @@ class TaskSetImpl;
 
 class Event;
 
-class PromiseBase {
+class KJ_ASYNC_API PromiseBase {
 public:
   kj::String trace();
   // Dump debug info about this promise.
@@ -197,12 +197,12 @@ private:
   friend Promise<void> kj::joinPromises(Array<Promise<void>>&& promises);
 };
 
-void detach(kj::Promise<void>&& promise);
-void waitImpl(Own<_::PromiseNode>&& node, _::ExceptionOrValue& result, WaitScope& waitScope);
-Promise<void> yield();
-Own<PromiseNode> neverDone();
+KJ_ASYNC_API void detach(kj::Promise<void>&& promise);
+KJ_ASYNC_API void waitImpl(Own<_::PromiseNode>&& node, _::ExceptionOrValue& result, WaitScope& waitScope);
+KJ_ASYNC_API Promise<void> yield();
+KJ_ASYNC_API Own<PromiseNode> neverDone();
 
-class NeverDone {
+class KJ_ASYNC_API NeverDone {
 public:
   template <typename T>
   operator Promise<T>() const {

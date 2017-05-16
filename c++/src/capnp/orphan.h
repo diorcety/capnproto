@@ -101,7 +101,7 @@ private:
   friend class MessageBuilder;
 };
 
-class Orphanage: private kj::DisallowConstCopy {
+class CAPNP_API Orphanage: private kj::DisallowConstCopy {
   // Use to directly allocate Orphan objects, without having a parent object allocate and then
   // disown the object.
 

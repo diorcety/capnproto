@@ -32,7 +32,7 @@
 
 namespace capnp {
 
-class SchemaLoader {
+class CAPNP_API SchemaLoader {
   // Class which can be used to construct Schema objects from schema::Nodes as defined in
   // schema.capnp.
   //
@@ -44,7 +44,7 @@ class SchemaLoader {
   // implementation, of course.
 
 public:
-  class LazyLoadCallback {
+  class CAPNP_API LazyLoadCallback {
   public:
     virtual void load(const SchemaLoader& loader, uint64_t id) const = 0;
     // Request that the schema node with the given ID be loaded into the given SchemaLoader.  If

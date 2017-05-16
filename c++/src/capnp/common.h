@@ -38,6 +38,74 @@
 #include <kj/units.h>
 #endif
 
+#ifndef CAPNP_API
+#if defined(_MSC_VER)
+#if defined(CAPNP_EXPORTS)
+#define CAPNP_API __declspec(dllexport)
+#else
+#if defined(_LIB)
+#define CAPNP_API
+#else
+#define CAPNP_API __declspec(dllimport)
+#endif
+#endif
+#else
+#define CAPNP_API
+#endif
+#endif
+
+#ifndef CAPNP_RPC_API
+#if defined(_MSC_VER)
+#if defined(CAPNP_RPC_EXPORTS)
+#define CAPNP_RPC_API __declspec(dllexport)
+#else
+#if defined(CAPNP_EXPORTS)
+#define CAPNP_RPC_API
+#else
+#if defined(_LIB)
+#define CAPNP_RPC_API
+#else
+#define CAPNP_RPC_API __declspec(dllimport)
+#endif
+#endif
+#endif
+#else
+#define CAPNP_RPC_API
+#endif
+#endif
+
+#ifndef CAPNP_C_API
+#if defined(_MSC_VER)
+#if defined(CAPNP_C_EXPORTS)
+#define CAPNP_C_API __declspec(dllexport)
+#else
+#if defined(_LIB)
+#define CAPNP_C_API
+#else
+#define CAPNP_C_API __declspec(dllimport)
+#endif
+#endif
+#else
+#define CAPNP_C_API
+#endif
+#endif
+
+#ifndef CAPNP_JSON_API
+#if defined(_MSC_VER)
+#if defined(CAPNP_JSON_EXPORTS)
+#define CAPNP_JSON_API __declspec(dllexport)
+#else
+#if defined(_LIB)
+#define CAPNP_JSON_API
+#else
+#define CAPNP_JSON_API __declspec(dllimport)
+#endif
+#endif
+#else
+#define CAPNP_JSON_API
+#endif
+#endif
+
 namespace capnp {
 
 #define CAPNP_VERSION_MAJOR 0
@@ -69,7 +137,7 @@ inline kj::StringPtr KJ_STRINGIFY(Void) { return "void"; }
 struct Text;
 struct Data;
 
-enum class Kind: uint8_t {
+enum class CAPNP_API Kind: uint8_t {
   PRIMITIVE,
   BLOB,
   ENUM,
@@ -83,14 +151,14 @@ enum class Kind: uint8_t {
   // special handling. This includes types like AnyPointer, Dynamic*, etc.
 };
 
-enum class Style: uint8_t {
+enum class CAPNP_API Style: uint8_t {
   PRIMITIVE,
   POINTER,      // other than struct
   STRUCT,
   CAPABILITY
 };
 
-enum class ElementSize: uint8_t {
+enum class CAPNP_API ElementSize: uint8_t {
   // Size of a list element.
 
   VOID = 0,
@@ -105,7 +173,7 @@ enum class ElementSize: uint8_t {
   INLINE_COMPOSITE = 7
 };
 
-enum class PointerType {
+enum class CAPNP_API PointerType {
   // Various wire types a pointer field can take
 
   NULL_,

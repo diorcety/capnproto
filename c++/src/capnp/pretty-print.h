@@ -31,10 +31,10 @@
 
 namespace capnp {
 
-kj::StringTree prettyPrint(DynamicStruct::Reader value);
-kj::StringTree prettyPrint(DynamicStruct::Builder value);
-kj::StringTree prettyPrint(DynamicList::Reader value);
-kj::StringTree prettyPrint(DynamicList::Builder value);
+CAPNP_API kj::StringTree prettyPrint(DynamicStruct::Reader value);
+CAPNP_API kj::StringTree prettyPrint(DynamicStruct::Builder value);
+CAPNP_API kj::StringTree prettyPrint(DynamicList::Reader value);
+CAPNP_API kj::StringTree prettyPrint(DynamicList::Builder value);
 // Print the given Cap'n Proto struct or list with nice indentation.  Note that you can pass any
 // struct or list reader or builder type to this method, since they can be implicitly converted
 // to one of the dynamic types.

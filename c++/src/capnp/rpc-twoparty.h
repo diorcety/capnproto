@@ -43,7 +43,7 @@ typedef VatNetwork<rpc::twoparty::VatId, rpc::twoparty::ProvisionId,
     rpc::twoparty::RecipientId, rpc::twoparty::ThirdPartyCapId, rpc::twoparty::JoinResult>
     TwoPartyVatNetworkBase;
 
-class TwoPartyVatNetwork: public TwoPartyVatNetworkBase,
+class CAPNP_RPC_API TwoPartyVatNetwork: public TwoPartyVatNetworkBase,
                           private TwoPartyVatNetworkBase::Connection {
   // A `VatNetwork` that consists of exactly two parties communicating over an arbitrary byte
   // stream.  This is used to implement the common case of a client/server network.
@@ -87,7 +87,7 @@ private:
 
   kj::ForkedPromise<void> disconnectPromise = nullptr;
 
-  class FulfillerDisposer: public kj::Disposer {
+  class CAPNP_RPC_API FulfillerDisposer: public kj::Disposer {
     // Hack:  TwoPartyVatNetwork is both a VatNetwork and a VatNetwork::Connection.  When the RPC
     //   system detects (or initiates) a disconnection, it drops its reference to the Connection.
     //   When all references have been dropped, then we want disconnectPromise to be fulfilled.
@@ -113,7 +113,7 @@ private:
   kj::Promise<void> shutdown() override;
 };
 
-class TwoPartyServer: private kj::TaskSet::ErrorHandler {
+class CAPNP_RPC_API TwoPartyServer: private kj::TaskSet::ErrorHandler {
   // Convenience class which implements a simple server which accepts connections on a listener
   // socket and serices them as two-party connections.
 
@@ -137,7 +137,7 @@ private:
   void taskFailed(kj::Exception&& exception) override;
 };
 
-class TwoPartyClient {
+class CAPNP_RPC_API TwoPartyClient {
   // Convenience class which implements a simple client.
 
 public:

@@ -68,6 +68,10 @@ struct AutoDeleter {
   inline ~AutoDeleter() { operator delete(ptr); }
 };
 
+const HeapArrayDisposer& HeapArrayDisposer::_instance() {
+  return instance;
+}
+
 void* HeapArrayDisposer::allocateImpl(size_t elementSize, size_t elementCount, size_t capacity,
                                       void (*constructElement)(void*),
                                       void (*destroyElement)(void*)) {

@@ -73,7 +73,7 @@ inline bool doubleAlmostEqual(double a, double b) {
 #define ASSERT_FLOAT_EQ(x, y) KJ_ASSERT(::kj::_::floatAlmostEqual(y, x), y, x);
 #define ASSERT_DOUBLE_EQ(x, y) KJ_ASSERT(::kj::_::doubleAlmostEqual(y, x), y, x);
 
-class AddFailureAdapter {
+class KJ_API AddFailureAdapter {
 public:
   AddFailureAdapter(const char* file, int line): file(file), line(line) {}
 

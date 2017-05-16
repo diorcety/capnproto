@@ -35,28 +35,28 @@
 namespace capnp {
 namespace compiler {
 
-void parseFile(List<Statement>::Reader statements, ParsedFile::Builder result,
+CAPNP_C_API void parseFile(List<Statement>::Reader statements, ParsedFile::Builder result,
                ErrorReporter& errorReporter);
 // Parse a list of statements to build a ParsedFile.
 //
 // If any errors are reported, then the output is not usable.  However, it may be passed on through
 // later stages of compilation in order to detect additional errors.
 
-uint64_t generateRandomId();
+CAPNP_C_API uint64_t generateRandomId();
 // Generate a new random unique ID.  This lives here mostly for lack of a better location.
 
-uint64_t generateChildId(uint64_t parentId, kj::StringPtr childName);
+CAPNP_C_API uint64_t generateChildId(uint64_t parentId, kj::StringPtr childName);
 // Generate the ID for a child node given its parent ID and name.
 
-uint64_t generateGroupId(uint64_t parentId, uint16_t groupIndex);
+CAPNP_C_API uint64_t generateGroupId(uint64_t parentId, uint16_t groupIndex);
 // Generate the ID for a group within a struct.
 
-uint64_t generateMethodParamsId(uint64_t parentId, uint16_t methodOrdinal, bool isResults);
+CAPNP_C_API uint64_t generateMethodParamsId(uint64_t parentId, uint16_t methodOrdinal, bool isResults);
 // Generate the ID for a struct representing method params / results.
 //
 // TODO(cleanup):  Move generate*Id() somewhere more sensible.
 
-class CapnpParser {
+class CAPNP_C_API CapnpParser {
   // Advanced parser interface.  This interface exposes the inner parsers so that you can embed
   // them into your own parsers.
 

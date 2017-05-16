@@ -61,7 +61,7 @@ class ReadLimiter;
 class Segment;
 typedef kj::Id<uint32_t, Segment> SegmentId;
 
-class ReadLimiter {
+class CAPNP_API ReadLimiter {
   // Used to keep track of how much data has been processed from a message, and cut off further
   // processing if and when a particular limit is reached.  This is primarily intended to guard
   // against maliciously-crafted messages which contain cycles or overlapping structures.  Cycles
@@ -102,7 +102,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class BrokenCapFactory {
+class CAPNP_API BrokenCapFactory {
   // Callback for constructing broken caps.  We use this so that we can avoid arena.c++ having a
   // link-time dependency on capability code that lives in libcapnp-rpc.
 
@@ -112,7 +112,7 @@ public:
 };
 #endif  // !CAPNP_LITE
 
-class SegmentReader {
+class CAPNP_API SegmentReader {
 public:
   inline SegmentReader(Arena* arena, SegmentId id, const word* ptr, SegmentWordCount size,
                        ReadLimiter* readLimiter);
@@ -165,7 +165,7 @@ private:
   // Called in debug mode in cases that would segfault in opt mode. (Should be impossible!)
 };
 
-class SegmentBuilder: public SegmentReader {
+class CAPNP_API SegmentBuilder: public SegmentReader {
 public:
   inline SegmentBuilder(BuilderArena* arena, SegmentId id, word* ptr, SegmentWordCount size,
                         ReadLimiter* readLimiter, SegmentWordCount wordsUsed = ZERO * WORDS);
@@ -212,7 +212,7 @@ private:
   KJ_DISALLOW_COPY(SegmentBuilder);
 };
 
-class Arena {
+class CAPNP_API Arena {
 public:
   virtual ~Arena() noexcept(false);
 
@@ -225,7 +225,7 @@ public:
   // will need to continue with default values.
 };
 
-class ReaderArena final: public Arena {
+class CAPNP_API ReaderArena final: public Arena {
 public:
   explicit ReaderArena(MessageReader* message);
   ~ReaderArena() noexcept(false);
@@ -256,7 +256,7 @@ private:
   ReaderArena(MessageReader* message, const word* firstSegment, SegmentWordCount firstSegmentSize);
 };
 
-class BuilderArena final: public Arena {
+class CAPNP_API BuilderArena final: public Arena {
   // A BuilderArena that does not allow the injection of capabilities.
 
 public:
@@ -322,7 +322,7 @@ private:
   MessageBuilder* message;
   ReadLimiter dummyLimiter;
 
-  class LocalCapTable: public CapTableBuilder {
+  class CAPNP_API LocalCapTable: public CapTableBuilder {
 #if !CAPNP_LITE
   public:
     kj::Maybe<kj::Own<ClientHook>> extractCap(uint index) override;

@@ -32,7 +32,7 @@
 
 namespace kj {
 
-class Thread {
+class KJ_API Thread {
   // A thread!  Pass a lambda to the constructor, and it runs in the thread.  The destructor joins
   // the thread.  If the function throws an exception, it is rethrown from the thread's destructor
   // (if not unwinding from another exception).

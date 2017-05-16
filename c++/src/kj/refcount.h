@@ -30,7 +30,7 @@
 
 namespace kj {
 
-class Refcounted: private Disposer {
+class KJ_API Refcounted: private Disposer {
   // Subclass this to create a class that contains a reference count. Then, use
   // `kj::refcounted<T>()` to allocate a new refcounted pointer.
   //

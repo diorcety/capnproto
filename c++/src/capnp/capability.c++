@@ -633,7 +633,7 @@ kj::Own<ClientHook> BrokenPipeline::getPipelinedCap(kj::ArrayPtr<const PipelineO
 kj::Own<ClientHook> newNullCap() {
   // A null capability, unlike other broken capabilities, is considered resolved.
   return kj::refcounted<BrokenClient>("Called null capability.", true,
-                                      &ClientHook::NULL_CAPABILITY_BRAND);
+                                      &NULL_CAPABILITY_BRAND);
 }
 
 }  // namespace

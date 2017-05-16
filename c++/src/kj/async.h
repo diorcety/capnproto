@@ -491,7 +491,7 @@ PromiseFulfillerPair<T> newPromiseAndFulfiller();
 // =======================================================================================
 // TaskSet
 
-class TaskSet {
+class KJ_ASYNC_API TaskSet {
   // Holds a collection of Promise<void>s and ensures that each executes to completion.  Memory
   // associated with each promise is automatically freed when the promise completes.  Destroying
   // the TaskSet itself automatically cancels all unfinished promises.
@@ -503,7 +503,7 @@ class TaskSet {
   // and everything the daemon is doing is canceled.
 
 public:
-  class ErrorHandler {
+  class KJ_ASYNC_API ErrorHandler {
   public:
     virtual void taskFailed(kj::Exception&& exception) = 0;
   };
@@ -526,7 +526,7 @@ private:
 // =======================================================================================
 // The EventLoop class
 
-class EventPort {
+class KJ_ASYNC_API EventPort {
   // Interfaces between an `EventLoop` and events originating from outside of the loop's thread.
   // All such events come in through the `EventPort` implementation.
   //
@@ -578,7 +578,7 @@ public:
   // The default implementation throws an UNIMPLEMENTED exception.
 };
 
-class EventLoop {
+class KJ_ASYNC_API EventLoop {
   // Represents a queue of events being executed in a loop.  Most code won't interact with
   // EventLoop directly, but instead use `Promise`s to interact with it indirectly.  See the
   // documentation for `Promise`.
@@ -654,7 +654,7 @@ private:
   friend class WaitScope;
 };
 
-class WaitScope {
+class KJ_ASYNC_API WaitScope {
   // Represents a scope in which asynchronous programming can occur.  A `WaitScope` should usually
   // be allocated on the stack and serves two purposes:
   // * While the `WaitScope` exists, its `EventLoop` is registered as the current loop for the

@@ -30,7 +30,7 @@
 
 namespace kj {
 
-class StringTree {
+class KJ_API StringTree {
   // A long string, represented internally as a tree of strings.  This data structure is like a
   // String, but optimized for concatenation and iteration at the expense of seek time.  The
   // structure is intended to be used for building large text blobs from many small pieces, where
