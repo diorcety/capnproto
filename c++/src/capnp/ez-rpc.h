@@ -37,7 +37,7 @@ namespace capnp {
 
 class EzRpcContext;
 
-class EzRpcClient {
+class CAPNP_RPC_API EzRpcClient {
   // Super-simple interface for setting up a Cap'n Proto RPC client.  Example:
   //
   //     # Cap'n Proto schema
@@ -58,7 +58,7 @@ class EzRpcClient {
   //     }
   //
   //     // C++ server
-  //     class AdderImpl final: public Adder::Server {
+  //     class CAPNP_RPC_API AdderImpl final: public Adder::Server {
   //     public:
   //       kj::Promise<void> add(AddContext context) override {
   //         auto params = context.getParams();
@@ -159,7 +159,7 @@ private:
   kj::Own<Impl> impl;
 };
 
-class EzRpcServer {
+class CAPNP_RPC_API EzRpcServer {
   // The server counterpart to `EzRpcClient`.  See `EzRpcClient` for an example.
 
 public:

@@ -43,7 +43,7 @@
 
 namespace kj {
 
-class UnixEventPort: public EventPort {
+class KJ_ASYNC_API UnixEventPort: public EventPort {
   // An EventPort implementation which can wait for events on file descriptors as well as signals.
   // This API only makes sense on Unix.
   //
@@ -140,7 +140,7 @@ private:
 #endif
 };
 
-class UnixEventPort::FdObserver {
+class KJ_ASYNC_API UnixEventPort::FdObserver {
   // Object which watches a file descriptor to determine when it is readable or writable.
   //
   // For listen sockets, "readable" means that there is a connection to accept(). For everything

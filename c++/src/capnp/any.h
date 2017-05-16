@@ -74,7 +74,7 @@ template <> struct Kind_<AnyList> { static constexpr Kind kind = Kind::OTHER; };
 // =======================================================================================
 // AnyPointer!
 
-enum class Equality {
+enum class CAPNP_API Equality {
   NOT_EQUAL,
   EQUAL,
   UNKNOWN_CONTAINS_CAPS
@@ -88,7 +88,7 @@ struct AnyPointer {
 
   AnyPointer() = delete;
 
-  class Reader {
+  class CAPNP_API Reader {
   public:
     typedef AnyPointer Reads;
 
@@ -141,7 +141,7 @@ struct AnyPointer {
     friend struct _::PointerHelpers<AnyPointer>;
   };
 
-  class Builder {
+  class CAPNP_API Builder {
   public:
     typedef AnyPointer Builds;
 
@@ -264,7 +264,7 @@ struct AnyPointer {
   };
 
 #if !CAPNP_LITE
-  class Pipeline {
+  class CAPNP_API Pipeline {
   public:
     typedef AnyPointer Pipelines;
 
@@ -303,7 +303,7 @@ struct AnyPointer {
 };
 
 template <>
-class Orphan<AnyPointer> {
+class CAPNP_API Orphan<AnyPointer> {
   // An orphaned object of unknown type.
 
 public:
@@ -391,7 +391,7 @@ struct List<AnyPointer, Kind::OTHER> {
 
   List() = delete;
 
-  class Reader {
+  class CAPNP_API Reader {
   public:
     typedef List<AnyPointer> Reads;
 
@@ -419,7 +419,7 @@ struct List<AnyPointer, Kind::OTHER> {
     friend struct ToDynamic_;
   };
 
-  class Builder {
+  class CAPNP_API Builder {
   public:
     typedef List<AnyPointer> Builds;
 
@@ -450,7 +450,7 @@ struct List<AnyPointer, Kind::OTHER> {
   };
 };
 
-class AnyStruct::Reader {
+class CAPNP_API AnyStruct::Reader {
 public:
   typedef AnyStruct Reads;
 
@@ -491,7 +491,7 @@ private:
   friend class Orphanage;
 };
 
-class AnyStruct::Builder {
+class CAPNP_API AnyStruct::Builder {
 public:
   typedef AnyStruct Builds;
 
@@ -536,7 +536,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class AnyStruct::Pipeline {
+class CAPNP_API AnyStruct::Pipeline {
 public:
   inline Pipeline(decltype(nullptr)): typeless(nullptr) {}
   inline explicit Pipeline(AnyPointer::Pipeline&& typeless)
@@ -556,7 +556,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class List<AnyStruct, Kind::OTHER>::Reader {
+class CAPNP_API List<AnyStruct, Kind::OTHER>::Reader {
 public:
   typedef List<AnyStruct> Reads;
 
@@ -584,7 +584,7 @@ private:
   friend struct ToDynamic_;
 };
 
-class List<AnyStruct, Kind::OTHER>::Builder {
+class CAPNP_API List<AnyStruct, Kind::OTHER>::Builder {
 public:
   typedef List<AnyStruct> Builds;
 
@@ -614,7 +614,7 @@ private:
   friend struct ToDynamic_;
 };
 
-class AnyList::Reader {
+class CAPNP_API AnyList::Reader {
 public:
   typedef AnyList Reads;
 
@@ -650,7 +650,7 @@ private:
   friend class Orphanage;
 };
 
-class AnyList::Builder {
+class CAPNP_API AnyList::Builder {
 public:
   typedef AnyList Builds;
 
@@ -713,7 +713,7 @@ struct PipelineOp {
   };
 };
 
-class PipelineHook {
+class CAPNP_API PipelineHook {
   // Represents a currently-running call, and implements pipelined requests on its result.
 
 public:

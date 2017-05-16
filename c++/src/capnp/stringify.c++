@@ -19,6 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include "pretty-print.h"
 #include "dynamic.h"
 #include <kj/debug.h>
 #include <kj/vector.h>

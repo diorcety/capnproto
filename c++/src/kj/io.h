@@ -36,7 +36,7 @@ namespace kj {
 // =======================================================================================
 // Abstract interfaces
 
-class InputStream {
+class KJ_API InputStream {
 public:
   virtual ~InputStream() noexcept(false);
 
@@ -68,7 +68,7 @@ public:
   // into a scratch buffer.
 };
 
-class OutputStream {
+class KJ_API OutputStream {
 public:
   virtual ~OutputStream() noexcept(false);
 
@@ -81,7 +81,7 @@ public:
   // syscall.
 };
 
-class BufferedInputStream: public InputStream {
+class KJ_API BufferedInputStream: public InputStream {
   // An input stream which buffers some bytes in memory to reduce system call overhead.
   // - OR -
   // An input stream that actually reads from some in-memory data structure and wants to give its
@@ -99,7 +99,7 @@ public:
   // Like getReadBuffer() but may return an empty buffer on EOF.
 };
 
-class BufferedOutputStream: public OutputStream {
+class KJ_API BufferedOutputStream: public OutputStream {
   // An output stream which buffers some bytes in memory to reduce system call overhead.
   // - OR -
   // An output stream that actually writes into some in-memory data structure and wants to give its
@@ -117,7 +117,7 @@ public:
 // =======================================================================================
 // Buffered streams implemented as wrappers around regular streams
 
-class BufferedInputStreamWrapper: public BufferedInputStream {
+class KJ_API BufferedInputStreamWrapper: public BufferedInputStream {
   // Implements BufferedInputStream in terms of an InputStream.
   //
   // Note that the underlying stream's position is unpredictable once the wrapper is destroyed,
@@ -150,7 +150,7 @@ private:
   ArrayPtr<byte> bufferAvailable;
 };
 
-class BufferedOutputStreamWrapper: public BufferedOutputStream {
+class KJ_API BufferedOutputStreamWrapper: public BufferedOutputStream {
   // Implements BufferedOutputStream in terms of an OutputStream.  Note that writes to the
   // underlying stream may be delayed until flush() is called or the wrapper is destroyed.
 
@@ -184,7 +184,7 @@ private:
 // =======================================================================================
 // Array I/O
 
-class ArrayInputStream: public BufferedInputStream {
+class KJ_API ArrayInputStream: public BufferedInputStream {
 public:
   explicit ArrayInputStream(ArrayPtr<const byte> array);
   KJ_DISALLOW_COPY(ArrayInputStream);
@@ -199,7 +199,7 @@ private:
   ArrayPtr<const byte> array;
 };
 
-class ArrayOutputStream: public BufferedOutputStream {
+class KJ_API ArrayOutputStream: public BufferedOutputStream {
 public:
   explicit ArrayOutputStream(ArrayPtr<byte> array);
   KJ_DISALLOW_COPY(ArrayOutputStream);
@@ -219,7 +219,7 @@ private:
   byte* fillPos;
 };
 
-class VectorOutputStream: public BufferedOutputStream {
+class KJ_API VectorOutputStream: public BufferedOutputStream {
 public:
   explicit VectorOutputStream(size_t initialCapacity = 4096);
   KJ_DISALLOW_COPY(VectorOutputStream);
@@ -244,7 +244,7 @@ private:
 // =======================================================================================
 // File descriptor I/O
 
-class AutoCloseFd {
+class KJ_API AutoCloseFd {
   // A wrapper around a file descriptor which automatically closes the descriptor when destroyed.
   // The wrapper supports move construction for transferring ownership of the descriptor.  If
   // close() returns an error, the destructor throws an exception, UNLESS the destructor is being
@@ -293,7 +293,7 @@ inline auto KJ_STRINGIFY(const AutoCloseFd& fd)
   return kj::toCharSequence(implicitCast<int>(fd));
 }
 
-class FdInputStream: public InputStream {
+class KJ_API FdInputStream: public InputStream {
   // An InputStream wrapping a file descriptor.
 
 public:
@@ -311,7 +311,7 @@ private:
   AutoCloseFd autoclose;
 };
 
-class FdOutputStream: public OutputStream {
+class KJ_API FdOutputStream: public OutputStream {
   // An OutputStream wrapping a file descriptor.
 
 public:
@@ -335,7 +335,7 @@ private:
 
 #ifdef _WIN32
 
-class AutoCloseHandle {
+class KJ_API AutoCloseHandle {
   // A wrapper around a Win32 HANDLE which automatically closes the handle when destroyed.
   // The wrapper supports move construction for transferring ownership of the handle.  If
   // CloseHandle() returns an error, the destructor throws an exception, UNLESS the destructor is
@@ -380,7 +380,7 @@ private:
   void* handle;  // -1 (aka INVALID_HANDLE_VALUE) if not valid.
 };
 
-class HandleInputStream: public InputStream {
+class KJ_API HandleInputStream: public InputStream {
   // An InputStream wrapping a Win32 HANDLE.
 
 public:
@@ -396,7 +396,7 @@ private:
   AutoCloseHandle autoclose;
 };
 
-class HandleOutputStream: public OutputStream {
+class KJ_API HandleOutputStream: public OutputStream {
   // An OutputStream wrapping a Win32 HANDLE.
 
 public:

@@ -61,7 +61,7 @@ using Date = Absolute<Duration, _::DateLabel>;
 constexpr Date UNIX_EPOCH = origin<Date>();
 // The `Date` representing Jan 1, 1970 00:00:00 UTC.
 
-class Clock {
+class KJ_ASYNC_API Clock {
   // Interface to read the current date and time.
 public:
   virtual Date now() = 0;
@@ -71,7 +71,7 @@ Clock& nullClock();
 // A clock which always returns UNIX_EPOCH as the current time. Useful when you don't care about
 // time.
 
-class Timer {
+class KJ_ASYNC_API Timer {
   // Interface to time and timer functionality.
   //
   // Each `Timer` may have a different origin, and some `Timer`s may in fact tick at a different
@@ -107,7 +107,7 @@ private:
   static kj::Exception makeTimeoutException();
 };
 
-class TimerImpl final: public Timer {
+class KJ_ASYNC_API TimerImpl final: public Timer {
   // Implementation of Timer that expects an external caller -- usually, the EventPort
   // implementation -- to tell it when time has advanced.
 

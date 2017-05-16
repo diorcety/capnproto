@@ -33,7 +33,7 @@ namespace kj {
 // =======================================================================================
 // Disposer -- Implementation details.
 
-class Disposer {
+class KJ_API Disposer {
   // Abstract interface for a thing that "disposes" of objects, where "disposing" usually means
   // calling the destructor followed by freeing the underlying memory.  `Own<T>` encapsulates an
   // object pointer with corresponding Disposer.
@@ -83,7 +83,7 @@ public:
 template <typename T>
 const DestructorOnlyDisposer<T> DestructorOnlyDisposer<T>::instance = DestructorOnlyDisposer<T>();
 
-class NullDisposer: public Disposer {
+class KJ_API NullDisposer: public Disposer {
   // A disposer that does nothing.
 
 public:

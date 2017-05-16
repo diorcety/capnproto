@@ -35,7 +35,7 @@
 namespace capnp {
 namespace compiler {
 
-class ModuleLoader {
+class CAPNP_C_API ModuleLoader {
 public:
   explicit ModuleLoader(GlobalErrorReporter& errorReporter);
   // Create a ModuleLoader that reports error messages to the given reporter.

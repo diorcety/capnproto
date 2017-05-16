@@ -105,7 +105,7 @@ struct RawBrandedSchema {
   uint32_t scopeCount;
   uint32_t dependencyCount;
 
-  enum class DepKind {
+  enum class CAPNP_API DepKind {
     // Component of a Dependency::location. Specifies what sort of dependency this is.
 
     INVALID,
@@ -135,7 +135,7 @@ struct RawBrandedSchema {
     return (static_cast<uint>(kind) << 24) | index;
   }
 
-  class Initializer {
+  class CAPNP_API Initializer {
   public:
     virtual void init(const RawBrandedSchema* generic) const = 0;
   };
@@ -201,7 +201,7 @@ struct RawSchema {
   // with this schema.  This is null for all compiled-in types; it is only set by SchemaLoader on
   // dynamically-loaded types.
 
-  class Initializer {
+  class CAPNP_API Initializer {
   public:
     virtual void init(const RawSchema* schema) const = 0;
   };

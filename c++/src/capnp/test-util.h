@@ -184,7 +184,7 @@ void checkList(T reader, std::initializer_list<ReaderFor<Element>> expected) {
 
 #if !CAPNP_LITE
 
-class TestInterfaceImpl final: public test::TestInterface::Server {
+class CAPNP_API TestInterfaceImpl final: public test::TestInterface::Server {
 public:
   TestInterfaceImpl(int& callCount);
 
@@ -196,7 +196,7 @@ private:
   int& callCount;
 };
 
-class TestExtendsImpl final: public test::TestExtends2::Server {
+class CAPNP_API TestExtendsImpl final: public test::TestExtends2::Server {
 public:
   TestExtendsImpl(int& callCount);
 
@@ -208,7 +208,7 @@ private:
   int& callCount;
 };
 
-class TestPipelineImpl final: public test::TestPipeline::Server {
+class CAPNP_API TestPipelineImpl final: public test::TestPipeline::Server {
 public:
   TestPipelineImpl(int& callCount);
 
@@ -219,7 +219,7 @@ private:
   int& callCount;
 };
 
-class TestCallOrderImpl final: public test::TestCallOrder::Server {
+class CAPNP_API TestCallOrderImpl final: public test::TestCallOrder::Server {
 public:
   kj::Promise<void> getCallSequence(GetCallSequenceContext context) override;
 
@@ -227,7 +227,7 @@ private:
   uint count = 0;
 };
 
-class TestTailCallerImpl final: public test::TestTailCaller::Server {
+class CAPNP_API TestTailCallerImpl final: public test::TestTailCaller::Server {
 public:
   TestTailCallerImpl(int& callCount);
 
@@ -237,7 +237,7 @@ private:
   int& callCount;
 };
 
-class TestTailCalleeImpl final: public test::TestTailCallee::Server {
+class CAPNP_API TestTailCalleeImpl final: public test::TestTailCallee::Server {
 public:
   TestTailCalleeImpl(int& callCount);
 
@@ -247,7 +247,7 @@ private:
   int& callCount;
 };
 
-class TestMoreStuffImpl final: public test::TestMoreStuff::Server {
+class CAPNP_API TestMoreStuffImpl final: public test::TestMoreStuff::Server {
 public:
   TestMoreStuffImpl(int& callCount, int& handleCount);
 
@@ -283,7 +283,7 @@ private:
   kj::Promise<void> loop(uint depth, test::TestInterface::Client cap, ExpectCancelContext context);
 };
 
-class TestCapDestructor final: public test::TestInterface::Server {
+class CAPNP_API TestCapDestructor final: public test::TestInterface::Server {
   // Implementation of TestInterface that notifies when it is destroyed.
 
 public:

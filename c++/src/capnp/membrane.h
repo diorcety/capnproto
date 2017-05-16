@@ -52,7 +52,7 @@
 
 namespace capnp {
 
-class MembranePolicy {
+class CAPNP_API MembranePolicy {
   // Applications may implement this interface to define a membrane policy, which allows some
   // calls crossing the membrane to be blocked or redirected.
 

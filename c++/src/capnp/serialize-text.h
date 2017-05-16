@@ -33,7 +33,7 @@
 
 namespace capnp {
 
-class TextCodec {
+class CAPNP_API TextCodec {
   // Reads and writes Cap'n Proto objects in a plain text format (as used in the schema
   // language for constants, and read/written by the 'decode' and 'encode' commands of
   // the capnp tool).
