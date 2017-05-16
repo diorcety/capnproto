@@ -213,6 +213,7 @@ const ::capnp::_::RawSchema s_91cc55cd57de5419 = {
   0x91cc55cd57de5419, b_91cc55cd57de5419.words, 195, d_91cc55cd57de5419, m_91cc55cd57de5419,
   1, 10, i_91cc55cd57de5419, nullptr, nullptr, { &s_91cc55cd57de5419, nullptr, nullptr, 0, 0, nullptr }
 };
+::capnp::_::RawSchema const* const sp_91cc55cd57de5419 = &s_91cc55cd57de5419;
 #endif  // !CAPNP_LITE
 static const ::capnp::_::AlignedData<119> b_c6725e678d60fa37 = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
@@ -347,6 +348,7 @@ const ::capnp::_::RawSchema s_c6725e678d60fa37 = {
   0xc6725e678d60fa37, b_c6725e678d60fa37.words, 119, d_c6725e678d60fa37, m_c6725e678d60fa37,
   2, 6, i_c6725e678d60fa37, nullptr, nullptr, { &s_c6725e678d60fa37, nullptr, nullptr, 0, 0, nullptr }
 };
+::capnp::_::RawSchema const* const sp_c6725e678d60fa37 = &s_c6725e678d60fa37;
 #endif  // !CAPNP_LITE
 static const ::capnp::_::AlignedData<38> b_9e69a92512b19d18 = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
@@ -399,6 +401,7 @@ const ::capnp::_::RawSchema s_9e69a92512b19d18 = {
   0x9e69a92512b19d18, b_9e69a92512b19d18.words, 38, d_9e69a92512b19d18, m_9e69a92512b19d18,
   1, 1, i_9e69a92512b19d18, nullptr, nullptr, { &s_9e69a92512b19d18, nullptr, nullptr, 0, 0, nullptr }
 };
+::capnp::_::RawSchema const* const sp_9e69a92512b19d18 = &s_9e69a92512b19d18;
 #endif  // !CAPNP_LITE
 static const ::capnp::_::AlignedData<40> b_a11f97b9d6c73dd4 = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
@@ -453,6 +456,7 @@ const ::capnp::_::RawSchema s_a11f97b9d6c73dd4 = {
   0xa11f97b9d6c73dd4, b_a11f97b9d6c73dd4.words, 40, d_a11f97b9d6c73dd4, m_a11f97b9d6c73dd4,
   1, 1, i_a11f97b9d6c73dd4, nullptr, nullptr, { &s_a11f97b9d6c73dd4, nullptr, nullptr, 0, 0, nullptr }
 };
+::capnp::_::RawSchema const* const sp_a11f97b9d6c73dd4 = &s_a11f97b9d6c73dd4;
 #endif  // !CAPNP_LITE
 }  // namespace schemas
 }  // namespace capnp
@@ -467,7 +471,6 @@ constexpr uint16_t Token::_capnpPrivate::dataWordSize;
 constexpr uint16_t Token::_capnpPrivate::pointerCount;
 #if !CAPNP_LITE
 constexpr ::capnp::Kind Token::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* Token::_capnpPrivate::schema;
 #endif  // !CAPNP_LITE
 
 // Statement
@@ -475,7 +478,6 @@ constexpr uint16_t Statement::_capnpPrivate::dataWordSize;
 constexpr uint16_t Statement::_capnpPrivate::pointerCount;
 #if !CAPNP_LITE
 constexpr ::capnp::Kind Statement::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* Statement::_capnpPrivate::schema;
 #endif  // !CAPNP_LITE
 
 // LexedTokens
@@ -483,7 +485,6 @@ constexpr uint16_t LexedTokens::_capnpPrivate::dataWordSize;
 constexpr uint16_t LexedTokens::_capnpPrivate::pointerCount;
 #if !CAPNP_LITE
 constexpr ::capnp::Kind LexedTokens::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* LexedTokens::_capnpPrivate::schema;
 #endif  // !CAPNP_LITE
 
 // LexedStatements
@@ -491,7 +492,6 @@ constexpr uint16_t LexedStatements::_capnpPrivate::dataWordSize;
 constexpr uint16_t LexedStatements::_capnpPrivate::pointerCount;
 #if !CAPNP_LITE
 constexpr ::capnp::Kind LexedStatements::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* LexedStatements::_capnpPrivate::schema;
 #endif  // !CAPNP_LITE
 
 

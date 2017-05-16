@@ -4,6 +4,21 @@
 #ifndef CAPNP_INCLUDED_8ef99297a43a5e34_
 #define CAPNP_INCLUDED_8ef99297a43a5e34_
 
+#ifndef CAPNP_8ef99297a43a5e34_API 
+#if defined(_MSC_VER)
+#if defined(CAPNP_8ef99297a43a5e34_EXPORTS)
+#define CAPNP_8ef99297a43a5e34_API  __declspec(dllexport)
+#else
+#if defined(_LIB)
+#define CAPNP_8ef99297a43a5e34_API 
+#else
+#define CAPNP_8ef99297a43a5e34_API  __declspec(dllimport)
+#endif
+#endif
+#else
+#define CAPNP_8ef99297a43a5e34_API 
+#endif
+#endif
 #include <capnp/generated-header-support.h>
 #if !CAPNP_LITE
 #include <capnp/capability.h>
@@ -17,9 +32,9 @@
 namespace capnp {
 namespace schemas {
 
-CAPNP_DECLARE_SCHEMA(8825ffaa852cda72);
-CAPNP_DECLARE_SCHEMA(c27855d853a937cc);
-CAPNP_DECLARE_SCHEMA(9bbf84153dd4bb60);
+CAPNP_DECLARE_SCHEMA_2(8825ffaa852cda72, CAPNP_8ef99297a43a5e34_API );
+CAPNP_DECLARE_SCHEMA_2(c27855d853a937cc, CAPNP_8ef99297a43a5e34_API );
+CAPNP_DECLARE_SCHEMA_2(9bbf84153dd4bb60, CAPNP_8ef99297a43a5e34_API );
 
 }  // namespace schemas
 }  // namespace capnp
@@ -47,7 +62,7 @@ struct JsonValue {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(8825ffaa852cda72, 2, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -62,7 +77,7 @@ struct JsonValue::Field {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(c27855d853a937cc, 0, 2)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -77,14 +92,14 @@ struct JsonValue::Call {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(9bbf84153dd4bb60, 0, 2)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static ::capnp::_::RawBrandedSchema const* brand() { return &schema()->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
 
 // =======================================================================================
 
-class JsonValue::Reader {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Reader {
 public:
   typedef JsonValue Reads;
 
@@ -139,7 +154,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class JsonValue::Builder {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Builder {
 public:
   typedef JsonValue Builds;
 
@@ -210,7 +225,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class JsonValue::Pipeline {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Pipeline {
 public:
   typedef JsonValue Pipelines;
 
@@ -226,7 +241,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class JsonValue::Field::Reader {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Field::Reader {
 public:
   typedef Field Reads;
 
@@ -261,7 +276,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class JsonValue::Field::Builder {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Field::Builder {
 public:
   typedef Field Builds;
 
@@ -301,7 +316,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class JsonValue::Field::Pipeline {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Field::Pipeline {
 public:
   typedef Field Pipelines;
 
@@ -318,7 +333,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class JsonValue::Call::Reader {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Call::Reader {
 public:
   typedef Call Reads;
 
@@ -353,7 +368,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class JsonValue::Call::Builder {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Call::Builder {
 public:
   typedef Call Builds;
 
@@ -393,7 +408,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class JsonValue::Call::Pipeline {
+class CAPNP_8ef99297a43a5e34_API JsonValue::Call::Pipeline {
 public:
   typedef Call Pipelines;
 
