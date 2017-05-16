@@ -158,6 +158,7 @@ const ::capnp::_::RawSchema s_8825ffaa852cda72 = {
   0x8825ffaa852cda72, b_8825ffaa852cda72.words, 138, d_8825ffaa852cda72, m_8825ffaa852cda72,
   3, 7, i_8825ffaa852cda72, nullptr, nullptr, { &s_8825ffaa852cda72, nullptr, nullptr, 0, 0, nullptr }
 };
+::capnp::_::RawSchema const* const sp_8825ffaa852cda72 = &s_8825ffaa852cda72;
 #endif  // !CAPNP_LITE
 static const ::capnp::_::AlignedData<49> b_c27855d853a937cc = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
@@ -221,6 +222,7 @@ const ::capnp::_::RawSchema s_c27855d853a937cc = {
   0xc27855d853a937cc, b_c27855d853a937cc.words, 49, d_c27855d853a937cc, m_c27855d853a937cc,
   1, 2, i_c27855d853a937cc, nullptr, nullptr, { &s_c27855d853a937cc, nullptr, nullptr, 0, 0, nullptr }
 };
+::capnp::_::RawSchema const* const sp_c27855d853a937cc = &s_c27855d853a937cc;
 #endif  // !CAPNP_LITE
 static const ::capnp::_::AlignedData<54> b_9bbf84153dd4bb60 = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
@@ -289,6 +291,7 @@ const ::capnp::_::RawSchema s_9bbf84153dd4bb60 = {
   0x9bbf84153dd4bb60, b_9bbf84153dd4bb60.words, 54, d_9bbf84153dd4bb60, m_9bbf84153dd4bb60,
   1, 2, i_9bbf84153dd4bb60, nullptr, nullptr, { &s_9bbf84153dd4bb60, nullptr, nullptr, 0, 0, nullptr }
 };
+::capnp::_::RawSchema const* const sp_9bbf84153dd4bb60 = &s_9bbf84153dd4bb60;
 #endif  // !CAPNP_LITE
 }  // namespace schemas
 }  // namespace capnp
@@ -302,7 +305,6 @@ constexpr uint16_t JsonValue::_capnpPrivate::dataWordSize;
 constexpr uint16_t JsonValue::_capnpPrivate::pointerCount;
 #if !CAPNP_LITE
 constexpr ::capnp::Kind JsonValue::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* JsonValue::_capnpPrivate::schema;
 #endif  // !CAPNP_LITE
 
 // JsonValue::Field
@@ -310,7 +312,6 @@ constexpr uint16_t JsonValue::Field::_capnpPrivate::dataWordSize;
 constexpr uint16_t JsonValue::Field::_capnpPrivate::pointerCount;
 #if !CAPNP_LITE
 constexpr ::capnp::Kind JsonValue::Field::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* JsonValue::Field::_capnpPrivate::schema;
 #endif  // !CAPNP_LITE
 
 // JsonValue::Call
@@ -318,7 +319,6 @@ constexpr uint16_t JsonValue::Call::_capnpPrivate::dataWordSize;
 constexpr uint16_t JsonValue::Call::_capnpPrivate::pointerCount;
 #if !CAPNP_LITE
 constexpr ::capnp::Kind JsonValue::Call::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* JsonValue::Call::_capnpPrivate::schema;
 #endif  // !CAPNP_LITE
 
 
