@@ -22,8 +22,8 @@
 #if _WIN32
 
 // Request Vista-level APIs.
-#define WINVER 0x0600
-#define _WIN32_WINNT 0x0600
+#define WINVER 0x0501
+#define _WIN32_WINNT 0x0501
 
 #include "async-win32.h"
 #include "debug.h"
@@ -60,7 +60,11 @@ public:
       //
       // Note: Even if HasOverlappedIoCompleted(this) is true, CancelIoEx() still seems needed to
       //   force the completion event.
+#if _WIN32_WINNT >= 0x0600
       if (!CancelIoEx(handle, this)) {
+#else
+      if (!CancelIo(handle)) {
+#endif
         DWORD error = GetLastError();
 
         // ERROR_NOT_FOUND probably means the operation already completed and is enqueued on the
@@ -186,6 +190,7 @@ void Win32IocpEventPort::wake() const {
 }
 
 void Win32IocpEventPort::waitIocp(DWORD timeoutMs) {
+#if _WIN32_WINNT >= 0x0600
   if (isAllowApc) {
     ULONG countReceived = 0;
     OVERLAPPED_ENTRY entry;
@@ -217,6 +222,7 @@ void Win32IocpEventPort::waitIocp(DWORD timeoutMs) {
       }
     }
   } else {
+#endif
     DWORD bytesTransferred;
     ULONG_PTR completionKey;
     LPOVERLAPPED overlapped = nullptr;
@@ -239,7 +245,9 @@ void Win32IocpEventPort::waitIocp(DWORD timeoutMs) {
       DWORD error = success ? ERROR_SUCCESS : GetLastError();
       static_cast<IoPromiseAdapter*>(overlapped)->done(IoResult { error, bytesTransferred });
     }
+#if _WIN32_WINNT >= 0x0600
   }
+#endif
 }
 
 bool Win32IocpEventPort::receivedWake() {

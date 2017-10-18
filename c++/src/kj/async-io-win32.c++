@@ -23,8 +23,8 @@
 // For Unix implementation, see async-io-unix.c++.
 
 // Request Vista-level APIs.
-#define WINVER 0x0600
-#define _WIN32_WINNT 0x0600
+#define WINVER 0x0501
+#define _WIN32_WINNT 0x0501
 
 #include "async-io.h"
 #include "async-win32.h"
@@ -39,6 +39,55 @@
 #include <ws2tcpip.h>
 #include <mswsock.h>
 #include <stdlib.h>
+
+#if _WIN32_WINNT < 0x0600
+static int inet_pton(int af, const char *src, void *dst)
+{
+  struct sockaddr_storage ss;
+  int size = sizeof(ss);
+  char src_copy[INET6_ADDRSTRLEN+1];
+
+  ZeroMemory(&ss, sizeof(ss));
+  /* stupid non-const API */
+  strncpy (src_copy, src, INET6_ADDRSTRLEN+1);
+  src_copy[INET6_ADDRSTRLEN] = 0;
+
+  if (WSAStringToAddress(src_copy, af, NULL, (struct sockaddr *)&ss, &size) == 0) {
+    switch(af) {
+      case AF_INET:
+    *(struct in_addr *)dst = ((struct sockaddr_in *)&ss)->sin_addr;
+    return 1;
+      case AF_INET6:
+    *(struct in6_addr *)dst = ((struct sockaddr_in6 *)&ss)->sin6_addr;
+    return 1;
+    }
+  }
+  return 0;
+}
+
+static const char *inet_ntop(int af, const void *src, char *dst, socklen_t size)
+{
+  struct sockaddr_storage ss;
+  unsigned long s = size;
+
+  ZeroMemory(&ss, sizeof(ss));
+  ss.ss_family = af;
+
+  switch(af) {
+    case AF_INET:
+      ((struct sockaddr_in *)&ss)->sin_addr = *(struct in_addr *)src;
+      break;
+    case AF_INET6:
+      ((struct sockaddr_in6 *)&ss)->sin6_addr = *(struct in6_addr *)src;
+      break;
+    default:
+      return NULL;
+  }
+  /* cannot direclty use &size because of strict aliasing rules */
+  return (WSAAddressToString((struct sockaddr *)&ss, sizeof(ss), NULL, dst, &s) == 0)?
+          dst : NULL;
+}
+#endif
 
 #ifndef IPV6_V6ONLY
 // MinGW's headers are missing this.
@@ -502,21 +551,29 @@ public:
     switch (addr.generic.sa_family) {
       case AF_INET: {
         char buffer[16];
+#if _WIN32_WINNT >= 0x0600
         if (InetNtopA(addr.inet4.sin_family, const_cast<struct in_addr*>(&addr.inet4.sin_addr),
                       buffer, sizeof(buffer)) == nullptr) {
           KJ_FAIL_WIN32("InetNtop", WSAGetLastError()) { break; }
           return heapString("(inet_ntop error)");
         }
         return str(buffer, ':', ntohs(addr.inet4.sin_port));
+#else
+        inet_ntop(AF_INET, &addr.inet4.sin_addr, buffer, 16);
+#endif
       }
       case AF_INET6: {
         char buffer[46];
+#if _WIN32_WINNT >= 0x0600
         if (InetNtopA(addr.inet6.sin6_family, const_cast<struct in6_addr*>(&addr.inet6.sin6_addr),
                       buffer, sizeof(buffer)) == nullptr) {
           KJ_FAIL_WIN32("InetNtop", WSAGetLastError()) { break; }
           return heapString("(inet_ntop error)");
         }
         return str('[', buffer, "]:", ntohs(addr.inet6.sin6_port));
+#else
+        inet_ntop(AF_INET6, &addr.inet4.sin_addr, buffer, 16);
+#endif
       }
       default:
         return str("(unknown address family ", addr.generic.sa_family, ")");
@@ -619,7 +676,11 @@ public:
     buffer[addrPart.size()] = '\0';
 
     // OK, parse it!
+#if _WIN32_WINNT >= 0x0600
     switch (InetPtonA(af, buffer, addrTarget)) {
+#else
+    switch (inet_pton(af, buffer, addrTarget)) {
+#endif
       case 1: {
         // success.
         auto array = kj::heapArrayBuilder<SocketAddress>(1);

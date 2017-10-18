@@ -21,8 +21,8 @@
 
 #if _WIN32
 #define WIN32_LEAN_AND_MEAN 1  // lolz
-#define WINVER 0x0600
-#define _WIN32_WINNT 0x0600
+#define WINVER 0x0501
+#define _WIN32_WINNT 0x0501
 #endif
 
 #include "mutex.h"
@@ -47,6 +47,24 @@
 
 #elif _WIN32
 #include <windows.h>
+
+#if defined(_MSC_VER)
+#if _MSC_VER >= 1800
+#define _SUPPORT_CPP_MUTEX 1
+#else
+#define _SUPPORT_CPP_MUTEX 0
+#endif
+#else
+#if __cplusplus >= 201103L
+#define _SUPPORT_CPP_MUTEX 1
+#else
+#define _SUPPORT_CPP_MUTEX 0
+#endif
+#endif
+
+#if _SUPPORT_CPP_MUTEX
+#include <mutex>
+#endif
 #endif
 
 namespace kj {
@@ -214,6 +232,144 @@ void Once::reset() {
 }
 
 #elif _WIN32
+#if _SUPPORT_CPP_MUTEX
+class _OnceStruct {
+private:
+  ::std::mutex mutex_;
+  bool initialized_;
+
+public:
+  _OnceStruct(bool initialized) : initialized_(initialized) {
+  }
+
+  template<typename _Callable, typename... _Args>
+  void
+  call_once(_Callable&& __f, _Args&&... __args) {
+    // Early exit without locking
+    if(initialized_) return;
+    ::std::unique_lock<::std::mutex> __l(mutex_);
+    // Check again now that we locked the mutex
+    if(initialized_) return;
+    __f(std::forward<_Args>(__args)...);
+    initialized_ = true;
+  }
+
+  bool initialized() {
+    ::std::unique_lock<::std::mutex> __l(mutex_);
+    return initialized_;
+  }
+
+  void reset() {
+    if(!initialized_) return;
+    ::std::unique_lock<::std::mutex> __l(mutex_);
+    initialized_ = false;
+  }
+};
+
+
+class _MultiReaderSingleWriter {
+private:
+    CRITICAL_SECTION m_csWrite;
+    CRITICAL_SECTION m_csReaderCount;
+    long m_cReaders;
+    HANDLE m_hevReadersCleared;
+
+public:
+    _MultiReaderSingleWriter() {
+        m_cReaders = 0;
+        InitializeCriticalSection(&m_csWrite);
+        InitializeCriticalSection(&m_csReaderCount);
+        m_hevReadersCleared = CreateEvent(NULL,TRUE,TRUE,NULL);
+    }
+
+    ~_MultiReaderSingleWriter() {
+        WaitForSingleObject(m_hevReadersCleared,INFINITE);
+        CloseHandle(m_hevReadersCleared);
+        DeleteCriticalSection(&m_csWrite);
+        DeleteCriticalSection(&m_csReaderCount);
+    }
+
+
+    void EnterReader(void) {
+        EnterCriticalSection(&m_csWrite);
+        EnterCriticalSection(&m_csReaderCount);
+        if (++m_cReaders == 1)
+            ResetEvent(m_hevReadersCleared);
+        LeaveCriticalSection(&m_csReaderCount);
+        LeaveCriticalSection(&m_csWrite);
+    }
+
+    void LeaveReader(void) {
+        EnterCriticalSection(&m_csReaderCount);
+        if (--m_cReaders == 0)
+            SetEvent(m_hevReadersCleared);
+        LeaveCriticalSection(&m_csReaderCount);
+    }
+
+    void EnterWriter(void) {
+        EnterCriticalSection(&m_csWrite);
+        WaitForSingleObject(m_hevReadersCleared,INFINITE);
+    }
+
+    void LeaveWriter(void) {
+        LeaveCriticalSection(&m_csWrite);
+    }
+};
+
+#define coercedSrwLock (*reinterpret_cast<_MultiReaderSingleWriter**>(&srwLock))
+#define coercedInitOnce (*reinterpret_cast<_OnceStruct**>(&initOnce))
+
+Mutex::Mutex() {
+  static_assert(sizeof(SRWLOCK) == sizeof(srwLock), "SRWLOCK is not a pointer?");
+  coercedSrwLock = new _MultiReaderSingleWriter();
+}
+Mutex::~Mutex() {
+  delete coercedSrwLock;
+}
+
+void Mutex::lock(Exclusivity exclusivity) {
+  switch (exclusivity) {
+    case EXCLUSIVE:
+      coercedSrwLock->EnterWriter();
+      break;
+    case SHARED:
+      coercedSrwLock->EnterReader();
+      break;
+  }
+}
+
+void Mutex::unlock(Exclusivity exclusivity) {
+  switch (exclusivity) {
+    case EXCLUSIVE:
+      coercedSrwLock->LeaveWriter();
+      break;
+    case SHARED:
+      coercedSrwLock->LeaveReader();
+      break;
+  }
+}
+
+Once::Once(bool startInitialized) {
+  static_assert(sizeof(INIT_ONCE) == sizeof(initOnce), "INIT_ONCE is not a pointer?");
+  coercedInitOnce = new _OnceStruct(startInitialized);
+}
+Once::~Once() {
+  delete coercedInitOnce;
+}
+
+void Once::runOnce(Initializer& init) {
+  coercedInitOnce->call_once([&](){init.run();});
+}
+
+bool Once::isInitialized() noexcept {
+  return coercedInitOnce->initialized();
+}
+
+void Once::reset() {
+  return coercedInitOnce->reset();
+}
+
+#elif _WIN32_WINNT >= 0x0600
 // =======================================================================================
 // Win32 implementation
 
@@ -292,7 +448,9 @@ bool Once::isInitialized() noexcept {
 void Once::reset() {
   InitOnceInitialize(&coercedInitOnce);
 }
-
+#else
+#error Unsupported Windows version/C++ Runtime
+#endif
 #else
 // =======================================================================================
 // Generic pthreads-based implementation
