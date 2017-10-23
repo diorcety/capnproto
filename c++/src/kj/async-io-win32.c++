@@ -22,9 +22,11 @@
 #if _WIN32
 // For Unix implementation, see async-io-unix.c++.
 
-// Request Vista-level APIs.
+// Request XP-level APIs.
+#if !defined _WIN32_WINNT
 #define WINVER 0x0501
 #define _WIN32_WINNT 0x0501
+#endif
 
 #include "async-io.h"
 #include "async-win32.h"
