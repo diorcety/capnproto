@@ -4,6 +4,8 @@ set(VERSION 0.6.1)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DKJ_USE_EPOLL=0 -D__BIONIC__=1")
+
 include(CheckIncludeFileCXX)
 include(GNUInstallDirs)
 if(MSVC)
