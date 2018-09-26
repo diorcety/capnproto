@@ -1103,7 +1103,7 @@ inline bool StructReader::hasDataField<Void>(StructDataOffset offset) const {
 
 template <typename T>
 inline T StructReader::getDataField(StructDataOffset offset) const {
-  if ((offset + ONE * ELEMENTS) * capnp::bitsPerElement<T>() <= dataSize) {
+  if ((offset + ONE * ELEMENTS) * bitsPerElement<T>() <= dataSize) {
     return reinterpret_cast<const WireValue<T>*>(data)[unbound(offset / ELEMENTS)].get();
   } else {
     return static_cast<T>(0);
@@ -1156,7 +1156,7 @@ inline T ListBuilder::getDataElement(ElementCount index) {
   //   the various non-inline methods that look up pointers.
   //   Also if using this, consider changing ptr back to void* instead of byte*.
 //  return reinterpret_cast<WireValue<T>*>(ptr)[
-//      index / ELEMENTS * (step / capnp::bitsPerElement<T>())].get();
+//      index / ELEMENTS * (step / bitsPerElement<T>())].get();
 }
 
 template <>
