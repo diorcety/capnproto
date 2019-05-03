@@ -374,7 +374,7 @@ inline constexpr uint sizeInWords() {
 
 #define CAPNP_DECLARE_SCHEMA_2(id, exp) \
     extern exp ::capnp::word const* const bp_##id; \
-    extern const ::capnp::_::RawSchema s_##id; \
+    extern exp const ::capnp::_::RawSchema s_##id; \
     extern exp ::capnp::_::RawSchema const* const sp_##id
 
 #define CAPNP_DECLARE_SCHEMA(id) CAPNP_DECLARE_SCHEMA_2(id, )
