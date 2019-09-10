@@ -53,6 +53,7 @@ set(capnp_headers
   raw-schema.h
 )
 set(capnp_schemas
+  java.capnp
   c++.capnp
   schema.capnp
 )
