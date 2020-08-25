@@ -30,6 +30,10 @@
 #include <signal.h>
 #endif
 
+#if _MSC_VER
+#include <intrin.h> // _InterlockedDecrement
+#endif
+
 namespace kj {
 
 #if _WIN32
@@ -133,7 +137,7 @@ void* Thread::runThread(void* ptr) {
 #endif  // _WIN32, else
 
 void Thread::ThreadState::unref() {
-#if _MSC_VER
+#if _MSC_VER && !defined(__clang__)
   if (_InterlockedDecrement(&refcount) == 0) {
 #else
   if (__atomic_sub_fetch(&refcount, 1, __ATOMIC_RELEASE) == 0) {
