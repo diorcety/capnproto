@@ -30,6 +30,10 @@
 #include <signal.h>
 #endif
 
+#if _MSC_VER
+#include <intrin.h> // _InterlockedDecrement
+#endif
+
 namespace kj {
 
 #if _WIN32
